@@ -11,15 +11,13 @@ namespace CyberStyle.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-
+    
     public partial class Usuario
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Usuario()
         {
             this.Pago = new HashSet<Pago>();
-            this.Recuperar = new HashSet<Recuperar>();
         }
     
         public int idusuario { get; set; }
@@ -27,16 +25,12 @@ namespace CyberStyle.Models
         public string nombres { get; set; }
         public string apellidos { get; set; }
         public string dni { get; set; }
-        [Required(ErrorMessage = "Ingrese su correo electronico")]
         public string correo { get; set; }
-        [Required(ErrorMessage = "Ingrese su contraseña")]
         public string contrasenia { get; set; }
         public Nullable<System.DateTime> fechaRegistro { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Pago> Pago { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Recuperar> Recuperar { get; set; }
         public virtual Rol Rol { get; set; }
     }
 }

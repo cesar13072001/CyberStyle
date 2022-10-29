@@ -21,11 +21,13 @@ namespace CyberStyle.Models
         }
     
         public int idproducto { get; set; }
-        public Nullable<int> idcategoria { get; set; }
-        public string nombreproducto { get; set; }
-        public Nullable<decimal> precio { get; set; }
-        public Nullable<int> stock { get; set; }
-        public byte[] foto { get; set; }
+        public string p_nombre { get; set; }
+        public string p_descripcion { get; set; }
+        public int p_categoria { get; set; }
+        public byte[] p_image { get; set; }
+        public int stock { get; set; }
+        public string estado { get; set; }
+        public Nullable<int> p_masvend { get; set; }
     
         public virtual Categoria Categoria { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -4,11 +4,12 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using CyberStyle.Models;
-
 namespace CyberStyle.Controllers
 {
     public class UsuarioController : Controller
     {
+        
+
         ciberstyleEntities db = new ciberstyleEntities();
 
         public ActionResult Login()

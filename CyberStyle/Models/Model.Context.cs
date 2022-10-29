@@ -31,9 +31,7 @@ namespace CyberStyle.Models
         public virtual DbSet<DetallePago> DetallePago { get; set; }
         public virtual DbSet<Pago> Pago { get; set; }
         public virtual DbSet<Producto> Producto { get; set; }
-        public virtual DbSet<Recuperar> Recuperar { get; set; }
         public virtual DbSet<Rol> Rol { get; set; }
-        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<Usuario> Usuario { get; set; }
     
         public virtual ObjectResult<login_usuario_Result> login_usuario(string correo, string contrasenia)
@@ -47,6 +45,41 @@ namespace CyberStyle.Models
                 new ObjectParameter("contrasenia", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<login_usuario_Result>("login_usuario", correoParameter, contraseniaParameter);
+        }
+    
+        public virtual int p_productoMasVendido()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("p_productoMasVendido");
+        }
+    
+        public virtual int p_registrarProducto(string nombre, string descripcion, Nullable<int> categoria, byte[] imagen, Nullable<int> stock)
+        {
+            var nombreParameter = nombre != null ?
+                new ObjectParameter("nombre", nombre) :
+                new ObjectParameter("nombre", typeof(string));
+    
+            var descripcionParameter = descripcion != null ?
+                new ObjectParameter("descripcion", descripcion) :
+                new ObjectParameter("descripcion", typeof(string));
+    
+            var categoriaParameter = categoria.HasValue ?
+                new ObjectParameter("Categoria", categoria) :
+                new ObjectParameter("Categoria", typeof(int));
+    
+            var imagenParameter = imagen != null ?
+                new ObjectParameter("imagen", imagen) :
+                new ObjectParameter("imagen", typeof(byte[]));
+    
+            var stockParameter = stock.HasValue ?
+                new ObjectParameter("stock", stock) :
+                new ObjectParameter("stock", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("p_registrarProducto", nombreParameter, descripcionParameter, categoriaParameter, imagenParameter, stockParameter);
+        }
+    
+        public virtual ObjectResult<p_productoMasVendido02_Result> p_productoMasVendido02()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<p_productoMasVendido02_Result>("p_productoMasVendido02");
         }
     }
 }

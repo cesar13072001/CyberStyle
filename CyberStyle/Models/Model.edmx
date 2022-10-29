@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="ciberstyleModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="ciberstyleModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Categoria">
           <Key>
             <PropertyRef Name="idcategoria" />
@@ -42,21 +42,13 @@
             <PropertyRef Name="idproducto" />
           </Key>
           <Property Name="idproducto" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="idcategoria" Type="int" />
-          <Property Name="nombreproducto" Type="varchar" MaxLength="100" />
-          <Property Name="precio" Type="money" />
-          <Property Name="stock" Type="int" />
-          <Property Name="foto" Type="image" />
-        </EntityType>
-        <EntityType Name="Recuperar">
-          <Key>
-            <PropertyRef Name="idrecuperar" />
-          </Key>
-          <Property Name="idrecuperar" Type="int" Nullable="false" />
-          <Property Name="idusuario" Type="int" />
-          <Property Name="fechacreacion" Type="datetime" />
-          <Property Name="fechaexpiracion" Type="datetime" />
-          <Property Name="estado" Type="varchar" MaxLength="50" />
+          <Property Name="p_nombre" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="p_descripcion" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="p_categoria" Type="int" Nullable="false" />
+          <Property Name="p_image" Type="image" Nullable="false" />
+          <Property Name="stock" Type="int" Nullable="false" />
+          <Property Name="estado" Type="varchar" MaxLength="10" />
+          <Property Name="p_masvend" Type="int" />
         </EntityType>
         <EntityType Name="Rol">
           <Key>
@@ -64,16 +56,6 @@
           </Key>
           <Property Name="idrol" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="nombrerol" Type="varchar" MaxLength="100" />
-        </EntityType>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="principal_id" Type="int" Nullable="false" />
-          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="version" Type="int" />
-          <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
         <EntityType Name="Usuario">
           <Key>
@@ -88,7 +70,7 @@
           <Property Name="contrasenia" Type="varchar" MaxLength="100" />
           <Property Name="fechaRegistro" Type="datetime" />
         </EntityType>
-        <Association Name="FK__DetallePa__idpag__30F848ED">
+        <Association Name="FK__DetallePa__idpag__33D4B598">
           <End Role="Pago" Type="Self.Pago" Multiplicity="1" />
           <End Role="DetallePago" Type="Self.DetallePago" Multiplicity="*" />
           <ReferentialConstraint>
@@ -100,7 +82,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__DetallePa__idpro__31EC6D26">
+        <Association Name="FK__DetallePa__idpro__34C8D9D1">
           <End Role="Producto" Type="Self.Producto" Multiplicity="1" />
           <End Role="DetallePago" Type="Self.DetallePago" Multiplicity="*" />
           <ReferentialConstraint>
@@ -112,7 +94,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Pago__total__2E1BDC42">
+        <Association Name="FK__Pago__total__30F848ED">
           <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
           <End Role="Pago" Type="Self.Pago" Multiplicity="*" />
           <ReferentialConstraint>
@@ -124,27 +106,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Producto__idcate__2B3F6F97">
-          <End Role="Categoria" Type="Self.Categoria" Multiplicity="0..1" />
+        <Association Name="FK__Producto__p_masv__2E1BDC42">
+          <End Role="Categoria" Type="Self.Categoria" Multiplicity="1" />
           <End Role="Producto" Type="Self.Producto" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Categoria">
               <PropertyRef Name="idcategoria" />
             </Principal>
             <Dependent Role="Producto">
-              <PropertyRef Name="idcategoria" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Recuperar__idusu__34C8D9D1">
-          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
-          <End Role="Recuperar" Type="Self.Recuperar" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Usuario">
-              <PropertyRef Name="idusuario" />
-            </Principal>
-            <Dependent Role="Recuperar">
-              <PropertyRef Name="idusuario" />
+              <PropertyRef Name="p_categoria" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -164,42 +134,44 @@
           <Parameter Name="correo" Type="varchar" Mode="In" />
           <Parameter Name="contrasenia" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="p_productoMasVendido" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="p_productoMasVendido02" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="p_registrarProducto" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="nombre" Type="varchar" Mode="In" />
+          <Parameter Name="descripcion" Type="varchar" Mode="In" />
+          <Parameter Name="Categoria" Type="int" Mode="In" />
+          <Parameter Name="imagen" Type="image" Mode="In" />
+          <Parameter Name="stock" Type="int" Mode="In" />
+        </Function>
         <EntityContainer Name="ciberstyleModelStoreContainer">
           <EntitySet Name="Categoria" EntityType="Self.Categoria" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DetallePago" EntityType="Self.DetallePago" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Pago" EntityType="Self.Pago" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Producto" EntityType="Self.Producto" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Recuperar" EntityType="Self.Recuperar" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Rol" EntityType="Self.Rol" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__DetallePa__idpag__30F848ED" Association="Self.FK__DetallePa__idpag__30F848ED">
+          <AssociationSet Name="FK__DetallePa__idpag__33D4B598" Association="Self.FK__DetallePa__idpag__33D4B598">
             <End Role="Pago" EntitySet="Pago" />
             <End Role="DetallePago" EntitySet="DetallePago" />
           </AssociationSet>
-          <AssociationSet Name="FK__DetallePa__idpro__31EC6D26" Association="Self.FK__DetallePa__idpro__31EC6D26">
+          <AssociationSet Name="FK__DetallePa__idpro__34C8D9D1" Association="Self.FK__DetallePa__idpro__34C8D9D1">
             <End Role="Producto" EntitySet="Producto" />
             <End Role="DetallePago" EntitySet="DetallePago" />
           </AssociationSet>
-          <AssociationSet Name="FK__Pago__total__2E1BDC42" Association="Self.FK__Pago__total__2E1BDC42">
+          <AssociationSet Name="FK__Pago__total__30F848ED" Association="Self.FK__Pago__total__30F848ED">
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="Pago" EntitySet="Pago" />
           </AssociationSet>
-          <AssociationSet Name="FK__Producto__idcate__2B3F6F97" Association="Self.FK__Producto__idcate__2B3F6F97">
+          <AssociationSet Name="FK__Producto__p_masv__2E1BDC42" Association="Self.FK__Producto__p_masv__2E1BDC42">
             <End Role="Categoria" EntitySet="Categoria" />
             <End Role="Producto" EntitySet="Producto" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Recuperar__idusu__34C8D9D1" Association="Self.FK__Recuperar__idusu__34C8D9D1">
-            <End Role="Usuario" EntitySet="Usuario" />
-            <End Role="Recuperar" EntitySet="Recuperar" />
           </AssociationSet>
           <AssociationSet Name="FK__Usuario__idrol__267ABA7A" Association="Self.FK__Usuario__idrol__267ABA7A">
             <End Role="Rol" EntitySet="Rol" />
             <End Role="Usuario" EntitySet="Usuario" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ciberstyleModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -210,7 +182,7 @@
           <Property Name="idcategoria" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="nomcategoria" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="estado" Type="String" MaxLength="9" FixedLength="true" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Producto" Relationship="Self.FK__Producto__idcate__2B3F6F97" FromRole="Categoria" ToRole="Producto" />
+          <NavigationProperty Name="Producto" Relationship="Self.FK__Producto__p_masv__2E1BDC42" FromRole="Categoria" ToRole="Producto" />
         </EntityType>
         <EntityType Name="DetallePago">
           <Key>
@@ -221,8 +193,8 @@
           <Property Name="idproducto" Type="Int32" Nullable="false" />
           <Property Name="cantidad" Type="Int32" />
           <Property Name="subtotal" Type="Decimal" Precision="9" Scale="2" />
-          <NavigationProperty Name="Pago" Relationship="Self.FK__DetallePa__idpag__30F848ED" FromRole="DetallePago" ToRole="Pago" />
-          <NavigationProperty Name="Producto" Relationship="Self.FK__DetallePa__idpro__31EC6D26" FromRole="DetallePago" ToRole="Producto" />
+          <NavigationProperty Name="Pago" Relationship="Self.FK__DetallePa__idpag__33D4B598" FromRole="DetallePago" ToRole="Pago" />
+          <NavigationProperty Name="Producto" Relationship="Self.FK__DetallePa__idpro__34C8D9D1" FromRole="DetallePago" ToRole="Producto" />
         </EntityType>
         <EntityType Name="Pago">
           <Key>
@@ -237,32 +209,23 @@
           <Property Name="mes" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
           <Property Name="cvv" Type="String" MaxLength="4" FixedLength="true" Unicode="false" />
           <Property Name="total" Type="Decimal" Precision="9" Scale="2" />
-          <NavigationProperty Name="DetallePago" Relationship="Self.FK__DetallePa__idpag__30F848ED" FromRole="Pago" ToRole="DetallePago" />
-          <NavigationProperty Name="Usuario" Relationship="Self.FK__Pago__total__2E1BDC42" FromRole="Pago" ToRole="Usuario" />
+          <NavigationProperty Name="DetallePago" Relationship="Self.FK__DetallePa__idpag__33D4B598" FromRole="Pago" ToRole="DetallePago" />
+          <NavigationProperty Name="Usuario" Relationship="Self.FK__Pago__total__30F848ED" FromRole="Pago" ToRole="Usuario" />
         </EntityType>
         <EntityType Name="Producto">
           <Key>
             <PropertyRef Name="idproducto" />
           </Key>
           <Property Name="idproducto" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="idcategoria" Type="Int32" />
-          <Property Name="nombreproducto" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="precio" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="stock" Type="Int32" />
-          <Property Name="foto" Type="Binary" MaxLength="Max" FixedLength="false" />
-          <NavigationProperty Name="Categoria" Relationship="Self.FK__Producto__idcate__2B3F6F97" FromRole="Producto" ToRole="Categoria" />
-          <NavigationProperty Name="DetallePago" Relationship="Self.FK__DetallePa__idpro__31EC6D26" FromRole="Producto" ToRole="DetallePago" />
-        </EntityType>
-        <EntityType Name="Recuperar">
-          <Key>
-            <PropertyRef Name="idrecuperar" />
-          </Key>
-          <Property Name="idrecuperar" Type="Int32" Nullable="false" />
-          <Property Name="idusuario" Type="Int32" />
-          <Property Name="fechacreacion" Type="DateTime" Precision="3" />
-          <Property Name="fechaexpiracion" Type="DateTime" Precision="3" />
-          <Property Name="estado" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Usuario" Relationship="Self.FK__Recuperar__idusu__34C8D9D1" FromRole="Recuperar" ToRole="Usuario" />
+          <Property Name="p_nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="p_descripcion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="p_categoria" Type="Int32" Nullable="false" />
+          <Property Name="p_image" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <Property Name="stock" Type="Int32" Nullable="false" />
+          <Property Name="estado" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="p_masvend" Type="Int32" />
+          <NavigationProperty Name="Categoria" Relationship="Self.FK__Producto__p_masv__2E1BDC42" FromRole="Producto" ToRole="Categoria" />
+          <NavigationProperty Name="DetallePago" Relationship="Self.FK__DetallePa__idpro__34C8D9D1" FromRole="Producto" ToRole="DetallePago" />
         </EntityType>
         <EntityType Name="Rol">
           <Key>
@@ -271,16 +234,6 @@
           <Property Name="idrol" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="nombrerol" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Usuario" Relationship="Self.FK__Usuario__idrol__267ABA7A" FromRole="Rol" ToRole="Usuario" />
-        </EntityType>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="principal_id" Type="Int32" Nullable="false" />
-          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="version" Type="Int32" />
-          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
         <EntityType Name="Usuario">
           <Key>
@@ -294,23 +247,22 @@
           <Property Name="correo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="contrasenia" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="fechaRegistro" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Pago" Relationship="Self.FK__Pago__total__2E1BDC42" FromRole="Usuario" ToRole="Pago" />
-          <NavigationProperty Name="Recuperar" Relationship="Self.FK__Recuperar__idusu__34C8D9D1" FromRole="Usuario" ToRole="Recuperar" />
+          <NavigationProperty Name="Pago" Relationship="Self.FK__Pago__total__30F848ED" FromRole="Usuario" ToRole="Pago" />
           <NavigationProperty Name="Rol" Relationship="Self.FK__Usuario__idrol__267ABA7A" FromRole="Usuario" ToRole="Rol" />
         </EntityType>
-        <Association Name="FK__Producto__idcate__2B3F6F97">
-          <End Role="Categoria" Type="Self.Categoria" Multiplicity="0..1" />
+        <Association Name="FK__Producto__p_masv__2E1BDC42">
+          <End Role="Categoria" Type="Self.Categoria" Multiplicity="1" />
           <End Role="Producto" Type="Self.Producto" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Categoria">
               <PropertyRef Name="idcategoria" />
             </Principal>
             <Dependent Role="Producto">
-              <PropertyRef Name="idcategoria" />
+              <PropertyRef Name="p_categoria" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__DetallePa__idpag__30F848ED">
+        <Association Name="FK__DetallePa__idpag__33D4B598">
           <End Role="Pago" Type="Self.Pago" Multiplicity="1" />
           <End Role="DetallePago" Type="Self.DetallePago" Multiplicity="*" />
           <ReferentialConstraint>
@@ -322,7 +274,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__DetallePa__idpro__31EC6D26">
+        <Association Name="FK__DetallePa__idpro__34C8D9D1">
           <End Role="Producto" Type="Self.Producto" Multiplicity="1" />
           <End Role="DetallePago" Type="Self.DetallePago" Multiplicity="*" />
           <ReferentialConstraint>
@@ -334,7 +286,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Pago__total__2E1BDC42">
+        <Association Name="FK__Pago__total__30F848ED">
           <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
           <End Role="Pago" Type="Self.Pago" Multiplicity="*" />
           <ReferentialConstraint>
@@ -342,18 +294,6 @@
               <PropertyRef Name="idusuario" />
             </Principal>
             <Dependent Role="Pago">
-              <PropertyRef Name="idusuario" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Recuperar__idusu__34C8D9D1">
-          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
-          <End Role="Recuperar" Type="Self.Recuperar" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Usuario">
-              <PropertyRef Name="idusuario" />
-            </Principal>
-            <Dependent Role="Recuperar">
               <PropertyRef Name="idusuario" />
             </Dependent>
           </ReferentialConstraint>
@@ -375,29 +315,23 @@
           <EntitySet Name="DetallePago" EntityType="Self.DetallePago" />
           <EntitySet Name="Pago" EntityType="Self.Pago" />
           <EntitySet Name="Producto" EntityType="Self.Producto" />
-          <EntitySet Name="Recuperar" EntityType="Self.Recuperar" />
           <EntitySet Name="Rol" EntityType="Self.Rol" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
           <EntitySet Name="Usuario" EntityType="Self.Usuario" />
-          <AssociationSet Name="FK__Producto__idcate__2B3F6F97" Association="Self.FK__Producto__idcate__2B3F6F97">
+          <AssociationSet Name="FK__Producto__p_masv__2E1BDC42" Association="Self.FK__Producto__p_masv__2E1BDC42">
             <End Role="Categoria" EntitySet="Categoria" />
             <End Role="Producto" EntitySet="Producto" />
           </AssociationSet>
-          <AssociationSet Name="FK__DetallePa__idpag__30F848ED" Association="Self.FK__DetallePa__idpag__30F848ED">
+          <AssociationSet Name="FK__DetallePa__idpag__33D4B598" Association="Self.FK__DetallePa__idpag__33D4B598">
             <End Role="Pago" EntitySet="Pago" />
             <End Role="DetallePago" EntitySet="DetallePago" />
           </AssociationSet>
-          <AssociationSet Name="FK__DetallePa__idpro__31EC6D26" Association="Self.FK__DetallePa__idpro__31EC6D26">
+          <AssociationSet Name="FK__DetallePa__idpro__34C8D9D1" Association="Self.FK__DetallePa__idpro__34C8D9D1">
             <End Role="Producto" EntitySet="Producto" />
             <End Role="DetallePago" EntitySet="DetallePago" />
           </AssociationSet>
-          <AssociationSet Name="FK__Pago__total__2E1BDC42" Association="Self.FK__Pago__total__2E1BDC42">
+          <AssociationSet Name="FK__Pago__total__30F848ED" Association="Self.FK__Pago__total__30F848ED">
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="Pago" EntitySet="Pago" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Recuperar__idusu__34C8D9D1" Association="Self.FK__Recuperar__idusu__34C8D9D1">
-            <End Role="Usuario" EntitySet="Usuario" />
-            <End Role="Recuperar" EntitySet="Recuperar" />
           </AssociationSet>
           <AssociationSet Name="FK__Usuario__idrol__267ABA7A" Association="Self.FK__Usuario__idrol__267ABA7A">
             <End Role="Rol" EntitySet="Rol" />
@@ -407,6 +341,15 @@
             <Parameter Name="correo" Mode="In" Type="String" />
             <Parameter Name="contrasenia" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="p_productoMasVendido" />
+          <FunctionImport Name="p_registrarProducto">
+            <Parameter Name="nombre" Mode="In" Type="String" />
+            <Parameter Name="descripcion" Mode="In" Type="String" />
+            <Parameter Name="Categoria" Mode="In" Type="Int32" />
+            <Parameter Name="imagen" Mode="In" Type="Binary" />
+            <Parameter Name="stock" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="p_productoMasVendido02" ReturnType="Collection(ciberstyleModel.p_productoMasVendido02_Result)" />
         </EntityContainer>
         <ComplexType Name="login_usuario_Result">
           <Property Type="Int32" Name="idusuario" Nullable="false" />
@@ -416,6 +359,12 @@
           <Property Type="String" Name="dni" Nullable="true" MaxLength="8" />
           <Property Type="String" Name="correo" Nullable="true" MaxLength="100" />
           <Property Type="DateTime" Name="fechaRegistro" Nullable="true" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="p_productoMasVendido02_Result">
+          <Property Type="Int32" Name="idproducto" Nullable="false" />
+          <Property Type="String" Name="p_nombre" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="p_descripcion" Nullable="false" MaxLength="100" />
+          <Property Type="Binary" Name="p_image" Nullable="false" MaxLength="Max" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -461,22 +410,13 @@
             <EntityTypeMapping TypeName="ciberstyleModel.Producto">
               <MappingFragment StoreEntitySet="Producto">
                 <ScalarProperty Name="idproducto" ColumnName="idproducto" />
-                <ScalarProperty Name="idcategoria" ColumnName="idcategoria" />
-                <ScalarProperty Name="nombreproducto" ColumnName="nombreproducto" />
-                <ScalarProperty Name="precio" ColumnName="precio" />
+                <ScalarProperty Name="p_nombre" ColumnName="p_nombre" />
+                <ScalarProperty Name="p_descripcion" ColumnName="p_descripcion" />
+                <ScalarProperty Name="p_categoria" ColumnName="p_categoria" />
+                <ScalarProperty Name="p_image" ColumnName="p_image" />
                 <ScalarProperty Name="stock" ColumnName="stock" />
-                <ScalarProperty Name="foto" ColumnName="foto" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Recuperar">
-            <EntityTypeMapping TypeName="ciberstyleModel.Recuperar">
-              <MappingFragment StoreEntitySet="Recuperar">
-                <ScalarProperty Name="idrecuperar" ColumnName="idrecuperar" />
-                <ScalarProperty Name="idusuario" ColumnName="idusuario" />
-                <ScalarProperty Name="fechacreacion" ColumnName="fechacreacion" />
-                <ScalarProperty Name="fechaexpiracion" ColumnName="fechaexpiracion" />
                 <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="p_masvend" ColumnName="p_masvend" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -485,17 +425,6 @@
               <MappingFragment StoreEntitySet="Rol">
                 <ScalarProperty Name="idrol" ColumnName="idrol" />
                 <ScalarProperty Name="nombrerol" ColumnName="nombrerol" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="ciberstyleModel.sysdiagrams">
-              <MappingFragment StoreEntitySet="sysdiagrams">
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="definition" ColumnName="definition" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -523,6 +452,18 @@
                 <ScalarProperty Name="dni" ColumnName="dni" />
                 <ScalarProperty Name="correo" ColumnName="correo" />
                 <ScalarProperty Name="fechaRegistro" ColumnName="fechaRegistro" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="p_productoMasVendido" FunctionName="ciberstyleModel.Store.p_productoMasVendido" />
+          <FunctionImportMapping FunctionImportName="p_registrarProducto" FunctionName="ciberstyleModel.Store.p_registrarProducto" />
+          <FunctionImportMapping FunctionImportName="p_productoMasVendido02" FunctionName="ciberstyleModel.Store.p_productoMasVendido02">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ciberstyleModel.p_productoMasVendido02_Result">
+                <ScalarProperty Name="idproducto" ColumnName="idproducto" />
+                <ScalarProperty Name="p_nombre" ColumnName="p_nombre" />
+                <ScalarProperty Name="p_descripcion" ColumnName="p_descripcion" />
+                <ScalarProperty Name="p_image" ColumnName="p_image" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

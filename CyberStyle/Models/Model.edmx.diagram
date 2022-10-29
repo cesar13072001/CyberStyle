@@ -4,20 +4,17 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="138c71f99a6f42f0b3425b94c27e092a" Name="Diagram1">
-        <EntityTypeShape EntityType="ciberstyleModel.Categoria" Width="1.5" PointX="3" PointY="8.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ciberstyleModel.DetallePago" Width="1.5" PointX="7.5" PointY="1.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="ciberstyleModel.Pago" Width="1.5" PointX="5.25" PointY="1.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="ciberstyleModel.Producto" Width="1.5" PointX="5.25" PointY="8.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="ciberstyleModel.Recuperar" Width="1.5" PointX="5.25" PointY="5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ciberstyleModel.Rol" Width="1.5" PointX="0.75" PointY="3.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="ciberstyleModel.sysdiagrams" Width="1.5" PointX="7.75" PointY="4.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ciberstyleModel.Usuario" Width="1.5" PointX="3" PointY="2.625" IsExpanded="true" />
-        <AssociationConnector Association="ciberstyleModel.FK__Producto__idcate__2B3F6F97" ManuallyRouted="false" />
-        <AssociationConnector Association="ciberstyleModel.FK__DetallePa__idpag__30F848ED" ManuallyRouted="false" />
-        <AssociationConnector Association="ciberstyleModel.FK__DetallePa__idpro__31EC6D26" ManuallyRouted="false" />
-        <AssociationConnector Association="ciberstyleModel.FK__Pago__total__2E1BDC42" ManuallyRouted="false" />
-        <AssociationConnector Association="ciberstyleModel.FK__Recuperar__idusu__34C8D9D1" ManuallyRouted="false" />
+      <Diagram DiagramId="e78da208057b4346b4cddb903720862a" Name="Diagram1">
+        <EntityTypeShape EntityType="ciberstyleModel.Categoria" Width="1.5" PointX="3" PointY="5.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ciberstyleModel.DetallePago" Width="1.5" PointX="7.5" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ciberstyleModel.Pago" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="ciberstyleModel.Producto" Width="1.5" PointX="5.25" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ciberstyleModel.Rol" Width="1.5" PointX="0.75" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ciberstyleModel.Usuario" Width="1.5" PointX="3" PointY="1.125" IsExpanded="true" />
+        <AssociationConnector Association="ciberstyleModel.FK__Producto__p_masv__2E1BDC42" ManuallyRouted="false" />
+        <AssociationConnector Association="ciberstyleModel.FK__DetallePa__idpag__33D4B598" ManuallyRouted="false" />
+        <AssociationConnector Association="ciberstyleModel.FK__DetallePa__idpro__34C8D9D1" ManuallyRouted="false" />
+        <AssociationConnector Association="ciberstyleModel.FK__Pago__total__30F848ED" ManuallyRouted="false" />
         <AssociationConnector Association="ciberstyleModel.FK__Usuario__idrol__267ABA7A" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>

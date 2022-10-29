@@ -1,6 +1,7 @@
 use master
 go
 
+
 create database ciberstyle
 go
 
@@ -31,6 +32,7 @@ fechaRegistro datetime,
 foreign key (idrol) references Rol(idrol)
 )
 
+
 create table Categoria
 (
 	idcategoria int identity(1,1) primary key,
@@ -43,12 +45,14 @@ go
 create table Producto
 (
 idproducto int identity(1,1) primary key,
-idcategoria int,
-nombreproducto varchar(100),
-precio money,
-stock int,
-foto image,
-foreign key (idcategoria) references Categoria(idcategoria)
+	p_nombre varchar(100) not null,
+	p_descripcion varchar(100) not null,
+	p_categoria int not null,
+	p_image image not null,
+	stock int not null,
+	estado varchar(10) check(estado in('Activo','Eliminado')),
+	p_masvend int default 0 check(p_masvend in(1,0))
+	foreign key (p_categoria) references Categoria(idcategoria)
 )
 
 
@@ -97,7 +101,7 @@ go*/
 /*PROCEDIMIENTOS ALMACENADOS*/
 /*AGUILAR ZAMBRANO*/
 insert into usuario values
-(2,'Cesar','Aguilar Zambrano','71296307','cesar@gmail.com','1234','2001-07-13')
+(2,'Cesar','Aguilar Zambrano','71296307','cesar@gmail.com','1234','')
 go
 
 create or alter proc login_usuario
@@ -115,5 +119,24 @@ exec login_usuario 'cesar@gmail.com', '1234'
 go
 /***************************/
 
+create proc p_productoMasVendido02
+as
+begin
+	select idproducto,p_nombre,p_descripcion,p_image from Producto where  estado = 'Activo' and stock > 0 and p_masvend = 1 
+end
+go
 
 
+
+create proc p_registrarProducto
+@nombre varchar(100),
+@descripcion varchar(100),
+@Categoria int,
+@imagen image,
+@stock int
+as
+begin
+	insert into Productos(p_nombre,p_descripcion,p_categoria,p_image,stock,estado)
+	values(@nombre,@descripcion,@Categoria,@imagen,@stock,'Activo')
+end
+go
