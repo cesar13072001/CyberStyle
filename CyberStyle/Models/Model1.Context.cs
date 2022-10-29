@@ -15,10 +15,10 @@ namespace CyberStyle.Models
     using System.Data.Entity.Core.Objects;
     using System.Linq;
     
-    public partial class ciberstyleEntities : DbContext
+    public partial class ciberstyleEntities1 : DbContext
     {
-        public ciberstyleEntities()
-            : base("name=ciberstyleEntities")
+        public ciberstyleEntities1()
+            : base("name=ciberstyleEntities1")
         {
         }
     
@@ -33,20 +33,11 @@ namespace CyberStyle.Models
         public virtual DbSet<Producto> Producto { get; set; }
         public virtual DbSet<Recuperar> Recuperar { get; set; }
         public virtual DbSet<Rol> Rol { get; set; }
-        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<Usuario> Usuario { get; set; }
     
-        public virtual ObjectResult<login_usuario_Result> login_usuario(string correo, string contrasenia)
+        public virtual ObjectResult<usp_ProductoListar_Result> usp_ProductoListar()
         {
-            var correoParameter = correo != null ?
-                new ObjectParameter("correo", correo) :
-                new ObjectParameter("correo", typeof(string));
-    
-            var contraseniaParameter = contrasenia != null ?
-                new ObjectParameter("contrasenia", contrasenia) :
-                new ObjectParameter("contrasenia", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<login_usuario_Result>("login_usuario", correoParameter, contraseniaParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usp_ProductoListar_Result>("usp_ProductoListar");
         }
     }
 }

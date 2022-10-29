@@ -65,16 +65,6 @@
           <Property Name="idrol" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="nombrerol" Type="varchar" MaxLength="100" />
         </EntityType>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="principal_id" Type="int" Nullable="false" />
-          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="version" Type="int" />
-          <Property Name="definition" Type="varbinary(max)" />
-        </EntityType>
         <EntityType Name="Usuario">
           <Key>
             <PropertyRef Name="idusuario" />
@@ -160,10 +150,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Function Name="login_usuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="correo" Type="varchar" Mode="In" />
-          <Parameter Name="contrasenia" Type="varchar" Mode="In" />
-        </Function>
+        <Function Name="usp_ProductoListar" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="ciberstyleModelStoreContainer">
           <EntitySet Name="Categoria" EntityType="Self.Categoria" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DetallePago" EntityType="Self.DetallePago" Schema="dbo" store:Type="Tables" />
@@ -171,7 +158,6 @@
           <EntitySet Name="Producto" EntityType="Self.Producto" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Recuperar" EntityType="Self.Recuperar" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Rol" EntityType="Self.Rol" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK__DetallePa__idpag__30F848ED" Association="Self.FK__DetallePa__idpag__30F848ED">
             <End Role="Pago" EntitySet="Pago" />
@@ -272,16 +258,6 @@
           <Property Name="nombrerol" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Usuario" Relationship="Self.FK__Usuario__idrol__267ABA7A" FromRole="Rol" ToRole="Usuario" />
         </EntityType>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="principal_id" Type="Int32" Nullable="false" />
-          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="version" Type="Int32" />
-          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
-        </EntityType>
         <EntityType Name="Usuario">
           <Key>
             <PropertyRef Name="idusuario" />
@@ -370,14 +346,13 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="ciberstyleEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="ciberstyleEntities1" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Categoria" EntityType="Self.Categoria" />
           <EntitySet Name="DetallePago" EntityType="Self.DetallePago" />
           <EntitySet Name="Pago" EntityType="Self.Pago" />
           <EntitySet Name="Producto" EntityType="Self.Producto" />
           <EntitySet Name="Recuperar" EntityType="Self.Recuperar" />
           <EntitySet Name="Rol" EntityType="Self.Rol" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
           <EntitySet Name="Usuario" EntityType="Self.Usuario" />
           <AssociationSet Name="FK__Producto__idcate__2B3F6F97" Association="Self.FK__Producto__idcate__2B3F6F97">
             <End Role="Categoria" EntitySet="Categoria" />
@@ -403,26 +378,22 @@
             <End Role="Rol" EntitySet="Rol" />
             <End Role="Usuario" EntitySet="Usuario" />
           </AssociationSet>
-          <FunctionImport Name="login_usuario" ReturnType="Collection(ciberstyleModel.login_usuario_Result)">
-            <Parameter Name="correo" Mode="In" Type="String" />
-            <Parameter Name="contrasenia" Mode="In" Type="String" />
-          </FunctionImport>
+          <FunctionImport Name="usp_ProductoListar" ReturnType="Collection(ciberstyleModel.usp_ProductoListar_Result)" />
         </EntityContainer>
-        <ComplexType Name="login_usuario_Result">
-          <Property Type="Int32" Name="idusuario" Nullable="false" />
-          <Property Type="Int32" Name="idrol" Nullable="true" />
-          <Property Type="String" Name="nombres" Nullable="true" MaxLength="100" />
-          <Property Type="String" Name="apellidos" Nullable="true" MaxLength="100" />
-          <Property Type="String" Name="dni" Nullable="true" MaxLength="8" />
-          <Property Type="String" Name="correo" Nullable="true" MaxLength="100" />
-          <Property Type="DateTime" Name="fechaRegistro" Nullable="true" Precision="23" />
+        <ComplexType Name="usp_ProductoListar_Result">
+          <Property Type="Int32" Name="idproducto" Nullable="false" />
+          <Property Type="String" Name="nombreproducto" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="nomcategoria" Nullable="false" MaxLength="100" />
+          <Property Type="Decimal" Name="precio" Nullable="true" Precision="19" />
+          <Property Type="Int32" Name="stock" Nullable="true" />
+          <Property Type="Binary" Name="foto" Nullable="true" MaxLength="Max" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="ciberstyleModelStoreContainer" CdmEntityContainer="ciberstyleEntities">
+        <EntityContainerMapping StorageEntityContainer="ciberstyleModelStoreContainer" CdmEntityContainer="ciberstyleEntities1">
           <EntitySetMapping Name="Categoria">
             <EntityTypeMapping TypeName="ciberstyleModel.Categoria">
               <MappingFragment StoreEntitySet="Categoria">
@@ -488,17 +459,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="ciberstyleModel.sysdiagrams">
-              <MappingFragment StoreEntitySet="sysdiagrams">
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="definition" ColumnName="definition" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Usuario">
             <EntityTypeMapping TypeName="ciberstyleModel.Usuario">
               <MappingFragment StoreEntitySet="Usuario">
@@ -513,16 +473,15 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="login_usuario" FunctionName="ciberstyleModel.Store.login_usuario">
+          <FunctionImportMapping FunctionImportName="usp_ProductoListar" FunctionName="ciberstyleModel.Store.usp_ProductoListar">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="ciberstyleModel.login_usuario_Result">
-                <ScalarProperty Name="idusuario" ColumnName="idusuario" />
-                <ScalarProperty Name="idrol" ColumnName="idrol" />
-                <ScalarProperty Name="nombres" ColumnName="nombres" />
-                <ScalarProperty Name="apellidos" ColumnName="apellidos" />
-                <ScalarProperty Name="dni" ColumnName="dni" />
-                <ScalarProperty Name="correo" ColumnName="correo" />
-                <ScalarProperty Name="fechaRegistro" ColumnName="fechaRegistro" />
+              <ComplexTypeMapping TypeName="ciberstyleModel.usp_ProductoListar_Result">
+                <ScalarProperty Name="idproducto" ColumnName="idproducto" />
+                <ScalarProperty Name="nombreproducto" ColumnName="nombreproducto" />
+                <ScalarProperty Name="nomcategoria" ColumnName="nomcategoria" />
+                <ScalarProperty Name="precio" ColumnName="precio" />
+                <ScalarProperty Name="stock" ColumnName="stock" />
+                <ScalarProperty Name="foto" ColumnName="foto" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

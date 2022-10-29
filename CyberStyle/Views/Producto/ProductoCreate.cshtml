@@ -1,0 +1,68 @@
+﻿@model CyberStyle.Models.Producto
+
+<body background="https://wallpaper.dog/large/592407.jpg" style=background-size:cover>
+    <i><h1 class="text-center">Nuevo Producto</h1></i>
+
+    @using (Html.BeginForm("ProductoCreate", "Producto", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+           <div class="form-group col">
+                <strong class="control-label col-md-2">Seleccione Categoria</strong>
+                <div class="col-md-10">
+
+                    @Html.DropDownList("idcategoria", (SelectList)ViewBag.Categoria)
+                </div>
+            </div>
+
+            <div class="form-group col">
+                @Html.LabelFor(model => model.nombreproducto, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.nombreproducto, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.nombreproducto, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group col">
+                @Html.LabelFor(model => model.precio, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.precio, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.precio, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group col">
+                @Html.LabelFor(model => model.foto, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <input type="file" name="imageload" />
+                    @Html.ValidationMessageFor(model => model.foto, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group col">
+                @Html.LabelFor(model => model.stock, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.stock, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.stock, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Guardar" class="btn btn-danger" />
+                    @Html.ActionLink("Volver al Listado", "ProductoListar")
+                </div>
+            </div>
+        </div>
+    }
+
+    <div>
+
+    </div>
+</body>

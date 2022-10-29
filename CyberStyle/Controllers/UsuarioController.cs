@@ -9,7 +9,7 @@ namespace CyberStyle.Controllers
 {
     public class UsuarioController : Controller
     {
-        ciberstyleEntities db = new ciberstyleEntities();
+        ciberstyleEntities1 db = new ciberstyleEntities1();
 
         public ActionResult Login()
         {
@@ -18,7 +18,7 @@ namespace CyberStyle.Controllers
         }
 
 
-        [HttpPost]
+        /*[HttpPost]
         public ActionResult Login(Usuario usu)
         {
             List<login_usuario_Result> user = new List<login_usuario_Result>();
@@ -34,6 +34,6 @@ namespace CyberStyle.Controllers
             ViewBag.mensaje = "Correo o contraseña incorrecta";
 
             return View();
-        }
+        }*/
     }
 }
