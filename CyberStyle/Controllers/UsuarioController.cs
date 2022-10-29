@@ -35,5 +35,32 @@ namespace CyberStyle.Controllers
 
             return View();
         }
+
+
+        public ActionResult Registro()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Registro(Usuario usu)
+        {
+            string mensaje = string.Empty;
+            try
+            {         
+                usu.idrol = 2;
+                usu.fechaRegistro = DateTime.Now;
+                db.Usuario.Add(usu);
+                db.SaveChanges();
+                return RedirectToAction("Login");     
+            }
+            catch (Exception ex)
+            {
+                mensaje = "Revise todos los campos";
+            }
+            ViewBag.mensaje = mensaje;
+            return View(usu);
+        }
+
     }
 }

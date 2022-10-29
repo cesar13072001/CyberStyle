@@ -1,0 +1,122 @@
+﻿
+@{
+    Layout = null;
+}
+
+@model CyberStyle.Models.Usuario
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+
+    <style>
+        .abs-center {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+    </style>
+</head>
+
+
+<body>
+    <div class="container">
+        <div class="row justify-content-center abs-center">
+            <div class="col-md-9 col-lg-12 col-xl-10">
+                <div class="card shadow-lg o-hidden border-0 my-5">
+
+                    <div class="card-body p-0">
+                        <div class="row">
+                            <div class="col-lg-6 d-none d-lg-flex">
+                                <div class="flex-grow-1" style="background-image: url('https://www.elpaseoshopping.com/slideshow/media/16422-slide-1.jpg'); background-position: right;
+                                    background-size: cover;"></div>
+                            </div>
+
+
+                            <div class="col-lg-6">
+                                <div class="p-5">
+                                    <div class="text-center">
+                                        <h4 class="mb-4">Registrate</h4>
+                                    </div>
+                                    <br>
+
+                            <form method="post" action="/Usuario/Registro">
+
+                                        <div class="mb-3">
+                                            <label class="form-label">Nombres</label>
+                                         
+                                            @Html.EditorFor(model => model.nombres, new { htmlAttributes = new { @class = "form-control form-control-user", Type = "text", placeholder = "Ingrese sus nombres" } })
+                                            @Html.ValidationMessageFor(model => model.nombres, "", new { @class = "text-danger" })
+                                        </div>
+                                
+
+                                <div class="mb-3">
+                                    <label class="form-label">Apellidos</label>
+                                
+                                    @Html.EditorFor(model => model.apellidos, new { htmlAttributes = new { @class = "form-control form-control-user", Type = "text", placeholder = "Ingrese sus apellidos" } })
+                                    @Html.ValidationMessageFor(model => model.apellidos, "", new { @class = "text-danger" })
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label">DNI</label>
+                                   
+                                    @Html.EditorFor(model => model.dni, new { htmlAttributes = new { @class = "form-control form-control-user", Type = "number", placeholder = "Ingrese su dni" } })
+                                    @Html.ValidationMessageFor(model => model.dni, "", new { @class = "text-danger" })
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label">Correo</label>
+                                   
+                                    @Html.EditorFor(model => model.correo, new { htmlAttributes = new { @class = "form-control form-control-user", Type = "email", placeholder = "Ingrese sus correo" } })
+                                    @Html.ValidationMessageFor(model => model.correo, "", new { @class = "text-danger" })
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label">Contraseña</label>
+                                    @Html.EditorFor(model => model.contrasenia, new { htmlAttributes = new { @class = "form-control form-control-user", Type = "password", placeholder = "Ingrese sus contraseña" } })
+                                    @Html.ValidationMessageFor(model => model.contrasenia, "", new { @class = "text-danger" })
+                                </div>
+                                <br>
+                                <button class="btn btn-primary d-block btn-user w-100" type="submit">Enviar</button>
+                            </form>
+
+
+                                <br>
+                                <div class="text-center"><a class="small" href="/Usuario/Login">¿Tiene una cuenta?</a></div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
+    <script>
+        window.watsonAssistantChatOptions = {
+            integrationID: "f45aef39-1313-48af-8956-9aca3e373fcb", // The ID of this integration.
+            region: "au-syd", // The region your integration is hosted in.
+            serviceInstanceID: "ab7516c2-e0f5-4e57-b5f1-cc3f3e712847", // The ID of your service instance.
+            onLoad: function (instance) { instance.render(); }
+        };
+        setTimeout(function () {
+            const t = document.createElement('script');
+            t.src = "https://web-chat.global.assistant.watson.appdomain.cloud/versions/" + (window.watsonAssistantChatOptions.clientVersion || 'latest') + "/WatsonAssistantChatEntry.js";
+            document.head.appendChild(t);
+        });
+    </script>
+
+</body>
+</html>
