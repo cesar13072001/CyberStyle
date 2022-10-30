@@ -14,7 +14,6 @@ namespace CyberStyle.Controllers
         public ActionResult Login()
         {
             return View();
-
         }
 
 
@@ -60,6 +59,13 @@ namespace CyberStyle.Controllers
             }
             ViewBag.mensaje = mensaje;
             return View(usu);
+        }
+
+        public ActionResult Salir()
+        {
+            
+            Session.Clear();
+            return RedirectToAction("Index", "Home");
         }
 
     }

@@ -3,14 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using CyberStyle.Models;
+
 
 namespace CyberStyle.Controllers
 {
     public class HomeController : Controller
     {
+        ciberstyleEntities db = new ciberstyleEntities();
+
         public ActionResult Index()
         {
-            return View();
+            var lista = from d in db.p_productoMasVendido02() select d;
+            ViewBag.lista02 = (from d in db.p_productoGeneral() select d).ToList();
+
+            return View(lista.ToList());
         }
 
         public ActionResult About()

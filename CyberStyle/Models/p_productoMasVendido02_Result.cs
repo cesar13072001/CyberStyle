@@ -10,16 +10,13 @@
 namespace CyberStyle.Models
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class Recuperar
+    public partial class p_productoMasVendido02_Result
     {
-        public int idrecuperar { get; set; }
-        public Nullable<int> idusuario { get; set; }
-        public Nullable<System.DateTime> fechacreacion { get; set; }
-        public Nullable<System.DateTime> fechaexpiracion { get; set; }
-        public string estado { get; set; }
-    
-        public virtual Usuario Usuario { get; set; }
+        public int idproducto { get; set; }
+        public string nombre { get; set; }
+        public string descripcion { get; set; }
+        public Nullable<decimal> precio { get; set; }
+        public byte[] imagen { get; set; }
     }
 }

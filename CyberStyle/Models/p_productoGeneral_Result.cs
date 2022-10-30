@@ -10,14 +10,12 @@
 namespace CyberStyle.Models
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class sysdiagrams
+    public partial class p_productoGeneral_Result
     {
-        public string name { get; set; }
-        public int principal_id { get; set; }
-        public int diagram_id { get; set; }
-        public Nullable<int> version { get; set; }
-        public byte[] definition { get; set; }
+        public int idproducto { get; set; }
+        public string nombre { get; set; }
+        public string descripcion { get; set; }
+        public byte[] imagen { get; set; }
     }
 }
