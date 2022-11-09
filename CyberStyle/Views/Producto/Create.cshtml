@@ -2,74 +2,149 @@
 
 @{
     ViewBag.Title = "Producto nuevo";
-}
-
-<h2>Agregar nuevo producto</h2>
-
-@using (Html.BeginForm("Create", "Producto", FormMethod.Post, new { enctype = "multipart/form-data" })) 
-{
-    @Html.AntiForgeryToken()
-    
-<div class="form-horizontal">
-    <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
-
-    <div class="form-group">
-        <label class="control-label col-md-2">Nombre producto</label>
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.nombre,  new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.nombre, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        <label class="control-label col-md-2">Descripción</label>
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.descripcion, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.descripcion, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        <label class="control-label col-md-2">Precio</label>
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.precio, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.precio, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        <label class="control-label col-md-2">Categoría</label>
-        <div class="col-md-10">
-            @Html.DropDownList("idcategoria", ViewData["categorias"] as SelectList)
-            @Html.ValidationMessageFor(model => model.idcategoria, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        <label class="control-label col-md-2">Stock</label>
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.stock, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.stock, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group col">
-        @Html.LabelFor(model => model.imagen, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            <input type="file" name="imageload" required />
-            @Html.ValidationMessageFor(model => model.imagen, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Agregar" class="btn btn-primary" />
-        </div>
-    </div>
-</div>
+    Layout = null;
 }
 
 
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Productos</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+</head>
+
+<style>
+    body {
+        background: #2AA0E8;
+        background: linear-gradient(to right, #2AA0E8,#DAE7F0);
+    }
+
+.bag { background-image: url('https://i.pinimg.com/564x/cf/32/a6/cf32a6a3e49827a6392624957998777e.jpg'); background-position: center center; }
+</style>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-dark  ">
+
+        <div class="container-fluid">
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarText">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" style="color: white">Inicio<i class="fa-solid fa-house"></i></a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" style="color: white" href="/Producto/Listar">Productos<i class="fa-solid fa-shirt"></i></a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" style="color: white">Mis Compras<i class="fa-solid fa-cart-shopping"></i></a>
+                    </li>
+
+                    <li class="nav-item "  style="float: left;margin-left: 870px;">
+                        <a class="nav-link" style="color: white" >Cerrar Session<i class="fa-solid fa-power-off"></i></a>
+                    </li>
+                </ul>
+
+
+            </div>
+
+
+
+        </div>
+
+    </nav>
+
+    <center><h2 class="fw-bold text-center  ">Nuevo Producto<img src="https://static.wixstatic.com/media/158d39_d33825bc378347048be3f7eeb451b465~mv2.gif" class="img-fluid " width="90px" height="90px"></h2></center>
+
+    @using (Html.BeginForm("Create", "Producto", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="container w-70 bg-primary mt-7 rounded shadow">
+            <div class="row align-items-stretch">
+
+                <div class="col bag d-none d-lg-block col-md-5 col-lg-5 col-xl-6 rounded">
+
+                </div>
+
+                <div class="col bg-white p-5 rounded-end">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                    <form>
+
+                        <label class="control-label col-md-2">Nombre</label>
+                        <div class="col-md-11">
+                            @Html.EditorFor(model => model.nombre, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.nombre, "", new { @class = "text-danger" })
+                        </div>
+
+
+                        <label class="control-label col-md-2">Descripción</label>
+                        <div class="col-md-11">
+                            @Html.EditorFor(model => model.descripcion, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.descripcion, "", new { @class = "text-danger" })
+                        </div>
+
+
+
+                        <label class="control-label col-md-2">Precio</label>
+                        <div class="col-md-11">
+                            @Html.EditorFor(model => model.precio, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.precio, "", new { @class = "text-danger" })
+                        </div>
+
+
+
+                        <label class="control-label col-md-2">Categoría</label>
+                        <div class="col-md-11">
+                            @Html.DropDownList("idcategoria", ViewData["categorias"] as SelectList, new { @class = "form-select" })
+                            @Html.ValidationMessageFor(model => model.idcategoria, "", new { @class = "text-danger" })
+                        </div>
+
+
+
+                        <label class="control-label col-md-2">Stock</label>
+                        <div class="col-md-11">
+                            @Html.EditorFor(model => model.stock, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.stock, "", new { @class = "text-danger" })
+                        </div>
+
+
+
+                        @Html.LabelFor(model => model.imagen, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-11">
+                            <input class="form-control" type="file" name="imageload" required />
+                            @Html.ValidationMessageFor(model => model.imagen, "", new { @class = "text-danger" })
+                        </div>
+
+                        <br />
+
+                        <div class="row">
+                            <div class="form-group col" >
+                                <button type="submit" class="btn btn-primary">Agregar <i class="fa-solid fa-shirt"></i></button>
+
+
+                            </div>
+
+
+                            <div class="form-group col" style="float: left;margin-left: 160px;">
+
+
+                                <a href="/Producto/Listar" class="btn btn-success">Regresar<i class="fa-solid fa-backward"></i></a>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+        <script src="https://kit.fontawesome.com/9a82813591.js" crossorigin="anonymous"></script>
+    }
+</body>
+</html>
