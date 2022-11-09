@@ -85,5 +85,14 @@ namespace CyberStyle.Models
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<p_productoGeneral_Result>("p_productoGeneral");
         }
+    
+        public virtual ObjectResult<mostrarUltimoPago_Result> mostrarUltimoPago(Nullable<int> idUsuario)
+        {
+            var idUsuarioParameter = idUsuario.HasValue ?
+                new ObjectParameter("idUsuario", idUsuario) :
+                new ObjectParameter("idUsuario", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<mostrarUltimoPago_Result>("mostrarUltimoPago", idUsuarioParameter);
+        }
     }
 }

@@ -12,6 +12,49 @@ namespace CyberStyle.Controllers
     {
         ciberstyleEntities db = new ciberstyleEntities();
 
+        public int getIndex(int id)
+        {
+            List<CarritoItem> compras = (List<CarritoItem>)Session["carrito"];
+            for (int i = 0; i < compras.Count(); i++)
+            {
+                if (compras[i].Producto.idproducto == id)
+                    return i;
+            }
+            return -1;
+        }
+
+        [HttpPost]
+        public ActionResult AgregarCarrito(int id, int cantidad)
+        {
+            if (Session["carrito"] == null)
+            {
+                List<CarritoItem> compras = new List<CarritoItem>();
+                compras.Add(new CarritoItem(db.Producto.Find(id), cantidad));
+                Session["carrito"] = compras;
+                ViewBag.mensajeA = "Producto Añadido";
+            }
+            else
+            {
+                List<CarritoItem> compras = (List<CarritoItem>)Session["carrito"];
+                int indexExistente = getIndex(id);
+                if (indexExistente == -1)
+                    compras.Add(new CarritoItem(db.Producto.Find(id), cantidad));
+                else
+                    compras[indexExistente].Cantidad += cantidad;
+                Session["carrito"] = compras;
+                ViewBag.mensajeA = "Producto Añadido";
+            }
+            return Json(new { response = true }, JsonRequestBehavior.AllowGet);
+
+        }
+
+        [HttpGet]
+        public ActionResult AgregarCarrito()
+        {
+            return RedirectToAction("Index");
+        }
+
+
         public ActionResult Index()
         {
             var lista = from d in db.p_productoMasVendido02() select d;

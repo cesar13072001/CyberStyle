@@ -135,6 +135,9 @@
           <Parameter Name="correo" Type="varchar" Mode="In" />
           <Parameter Name="contrasenia" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="mostrarUltimoPago" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idUsuario" Type="int" Mode="In" />
+        </Function>
         <Function Name="p_productoGeneral" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="p_productoMasVendido02" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="p_registrarProducto" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -354,6 +357,9 @@
             <Parameter Name="stock" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="p_productoGeneral" ReturnType="Collection(ciberstyleModel.p_productoGeneral_Result)" />
+          <FunctionImport Name="mostrarUltimoPago" ReturnType="Collection(ciberstyleModel.mostrarUltimoPago_Result)">
+            <Parameter Name="idUsuario" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="login_usuario_Result">
           <Property Type="Int32" Name="idusuario" Nullable="false" />
@@ -376,6 +382,17 @@
           <Property Type="String" Name="nombre" Nullable="false" MaxLength="100" />
           <Property Type="String" Name="descripcion" Nullable="false" MaxLength="100" />
           <Property Type="Binary" Name="imagen" Nullable="false" MaxLength="Max" />
+        </ComplexType>
+        <ComplexType Name="mostrarUltimoPago_Result">
+          <Property Type="Int32" Name="idpago" Nullable="false" />
+          <Property Type="Int32" Name="idusuario" Nullable="true" />
+          <Property Type="DateTime" Name="fechaPago" Nullable="true" Precision="23" />
+          <Property Type="String" Name="nomTarjeta" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="numTarjeta" Nullable="true" MaxLength="16" />
+          <Property Type="String" Name="annio" Nullable="true" MaxLength="4" />
+          <Property Type="String" Name="mes" Nullable="true" MaxLength="2" />
+          <Property Type="String" Name="cvv" Nullable="true" MaxLength="4" />
+          <Property Type="Decimal" Name="total" Nullable="true" Precision="9" Scale="2" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -486,6 +503,21 @@
                 <ScalarProperty Name="nombre" ColumnName="nombre" />
                 <ScalarProperty Name="descripcion" ColumnName="descripcion" />
                 <ScalarProperty Name="imagen" ColumnName="imagen" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="mostrarUltimoPago" FunctionName="ciberstyleModel.Store.mostrarUltimoPago">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ciberstyleModel.mostrarUltimoPago_Result">
+                <ScalarProperty Name="idpago" ColumnName="idpago" />
+                <ScalarProperty Name="idusuario" ColumnName="idusuario" />
+                <ScalarProperty Name="fechaPago" ColumnName="fechaPago" />
+                <ScalarProperty Name="nomTarjeta" ColumnName="nomTarjeta" />
+                <ScalarProperty Name="numTarjeta" ColumnName="numTarjeta" />
+                <ScalarProperty Name="annio" ColumnName="annio" />
+                <ScalarProperty Name="mes" ColumnName="mes" />
+                <ScalarProperty Name="cvv" ColumnName="cvv" />
+                <ScalarProperty Name="total" ColumnName="total" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
