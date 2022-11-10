@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="ciberstyleModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="ciberstyleModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Categoria">
           <Key>
             <PropertyRef Name="idcategoria" />
@@ -51,6 +51,17 @@
           <Property Name="estado" Type="varchar" MaxLength="10" />
           <Property Name="masvend" Type="int" />
         </EntityType>
+        <EntityType Name="Reclamos">
+          <Key>
+            <PropertyRef Name="idreclamo" />
+          </Key>
+          <Property Name="idreclamo" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="idpago" Type="int" />
+          <Property Name="telefono" Type="varchar" MaxLength="20" />
+          <Property Name="descripcion" Type="varchar" MaxLength="200" />
+          <Property Name="estado" Type="varchar" MaxLength="15" />
+          <Property Name="fecha" Type="varchar" MaxLength="10" />
+        </EntityType>
         <EntityType Name="Rol">
           <Key>
             <PropertyRef Name="idrol" />
@@ -71,7 +82,7 @@
           <Property Name="contrasenia" Type="varchar" MaxLength="100" />
           <Property Name="fechaRegistro" Type="datetime" />
         </EntityType>
-        <Association Name="FK__DetallePa__idpag__33D4B598">
+        <Association Name="FK__DetallePa__idpag__6C190EBB">
           <End Role="Pago" Type="Self.Pago" Multiplicity="1" />
           <End Role="DetallePago" Type="Self.DetallePago" Multiplicity="*" />
           <ReferentialConstraint>
@@ -83,7 +94,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__DetallePa__idpro__34C8D9D1">
+        <Association Name="FK__DetallePa__idpro__6D0D32F4">
           <End Role="Producto" Type="Self.Producto" Multiplicity="1" />
           <End Role="DetallePago" Type="Self.DetallePago" Multiplicity="*" />
           <ReferentialConstraint>
@@ -95,7 +106,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Pago__total__30F848ED">
+        <Association Name="FK__Pago__total__693CA210">
           <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
           <End Role="Pago" Type="Self.Pago" Multiplicity="*" />
           <ReferentialConstraint>
@@ -107,7 +118,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Producto__masven__2E1BDC42">
+        <Association Name="FK__Producto__masven__66603565">
           <End Role="Categoria" Type="Self.Categoria" Multiplicity="1" />
           <End Role="Producto" Type="Self.Producto" Multiplicity="*" />
           <ReferentialConstraint>
@@ -119,7 +130,19 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Usuario__idrol__267ABA7A">
+        <Association Name="FK__Reclamos__idpago__75A278F5">
+          <End Role="Pago" Type="Self.Pago" Multiplicity="0..1" />
+          <End Role="Reclamos" Type="Self.Reclamos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pago">
+              <PropertyRef Name="idpago" />
+            </Principal>
+            <Dependent Role="Reclamos">
+              <PropertyRef Name="idpago" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Usuario__idrol__5EBF139D">
           <End Role="Rol" Type="Self.Rol" Multiplicity="0..1" />
           <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
           <ReferentialConstraint>
@@ -131,9 +154,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="compradetalle" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idpago" Type="int" Mode="In" />
+        </Function>
         <Function Name="login_usuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="correo" Type="varchar" Mode="In" />
           <Parameter Name="contrasenia" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="mostrarUltimoPago" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idUsuario" Type="int" Mode="In" />
         </Function>
         <Function Name="p_productoGeneral" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="p_productoMasVendido02" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
@@ -150,30 +179,36 @@
           <EntitySet Name="DetallePago" EntityType="Self.DetallePago" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Pago" EntityType="Self.Pago" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Producto" EntityType="Self.Producto" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Reclamos" EntityType="Self.Reclamos" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Rol" EntityType="Self.Rol" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__DetallePa__idpag__33D4B598" Association="Self.FK__DetallePa__idpag__33D4B598">
+          <AssociationSet Name="FK__DetallePa__idpag__6C190EBB" Association="Self.FK__DetallePa__idpag__6C190EBB">
             <End Role="Pago" EntitySet="Pago" />
             <End Role="DetallePago" EntitySet="DetallePago" />
           </AssociationSet>
-          <AssociationSet Name="FK__DetallePa__idpro__34C8D9D1" Association="Self.FK__DetallePa__idpro__34C8D9D1">
+          <AssociationSet Name="FK__DetallePa__idpro__6D0D32F4" Association="Self.FK__DetallePa__idpro__6D0D32F4">
             <End Role="Producto" EntitySet="Producto" />
             <End Role="DetallePago" EntitySet="DetallePago" />
           </AssociationSet>
-          <AssociationSet Name="FK__Pago__total__30F848ED" Association="Self.FK__Pago__total__30F848ED">
+          <AssociationSet Name="FK__Pago__total__693CA210" Association="Self.FK__Pago__total__693CA210">
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="Pago" EntitySet="Pago" />
           </AssociationSet>
-          <AssociationSet Name="FK__Producto__masven__2E1BDC42" Association="Self.FK__Producto__masven__2E1BDC42">
+          <AssociationSet Name="FK__Producto__masven__66603565" Association="Self.FK__Producto__masven__66603565">
             <End Role="Categoria" EntitySet="Categoria" />
             <End Role="Producto" EntitySet="Producto" />
           </AssociationSet>
-          <AssociationSet Name="FK__Usuario__idrol__267ABA7A" Association="Self.FK__Usuario__idrol__267ABA7A">
+          <AssociationSet Name="FK__Reclamos__idpago__75A278F5" Association="Self.FK__Reclamos__idpago__75A278F5">
+            <End Role="Pago" EntitySet="Pago" />
+            <End Role="Reclamos" EntitySet="Reclamos" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Usuario__idrol__5EBF139D" Association="Self.FK__Usuario__idrol__5EBF139D">
             <End Role="Rol" EntitySet="Rol" />
             <End Role="Usuario" EntitySet="Usuario" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ciberstyleModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -184,7 +219,7 @@
           <Property Name="idcategoria" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="nomcategoria" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="estado" Type="String" MaxLength="9" FixedLength="true" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Producto" Relationship="Self.FK__Producto__masven__2E1BDC42" FromRole="Categoria" ToRole="Producto" />
+          <NavigationProperty Name="Producto" Relationship="Self.FK__Producto__masven__66603565" FromRole="Categoria" ToRole="Producto" />
         </EntityType>
         <EntityType Name="DetallePago">
           <Key>
@@ -195,8 +230,8 @@
           <Property Name="idproducto" Type="Int32" Nullable="false" />
           <Property Name="cantidad" Type="Int32" />
           <Property Name="subtotal" Type="Decimal" Precision="9" Scale="2" />
-          <NavigationProperty Name="Pago" Relationship="Self.FK__DetallePa__idpag__33D4B598" FromRole="DetallePago" ToRole="Pago" />
-          <NavigationProperty Name="Producto" Relationship="Self.FK__DetallePa__idpro__34C8D9D1" FromRole="DetallePago" ToRole="Producto" />
+          <NavigationProperty Name="Pago" Relationship="Self.FK__DetallePa__idpag__6C190EBB" FromRole="DetallePago" ToRole="Pago" />
+          <NavigationProperty Name="Producto" Relationship="Self.FK__DetallePa__idpro__6D0D32F4" FromRole="DetallePago" ToRole="Producto" />
         </EntityType>
         <EntityType Name="Pago">
           <Key>
@@ -211,8 +246,9 @@
           <Property Name="mes" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
           <Property Name="cvv" Type="String" MaxLength="4" FixedLength="true" Unicode="false" />
           <Property Name="total" Type="Decimal" Precision="9" Scale="2" />
-          <NavigationProperty Name="DetallePago" Relationship="Self.FK__DetallePa__idpag__33D4B598" FromRole="Pago" ToRole="DetallePago" />
-          <NavigationProperty Name="Usuario" Relationship="Self.FK__Pago__total__30F848ED" FromRole="Pago" ToRole="Usuario" />
+          <NavigationProperty Name="DetallePago" Relationship="Self.FK__DetallePa__idpag__6C190EBB" FromRole="Pago" ToRole="DetallePago" />
+          <NavigationProperty Name="Usuario" Relationship="Self.FK__Pago__total__693CA210" FromRole="Pago" ToRole="Usuario" />
+          <NavigationProperty Name="Reclamos" Relationship="Self.FK__Reclamos__idpago__75A278F5" FromRole="Pago" ToRole="Reclamos" />
         </EntityType>
         <EntityType Name="Producto">
           <Key>
@@ -227,8 +263,20 @@
           <Property Name="stock" Type="Int32" Nullable="false" />
           <Property Name="estado" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="masvend" Type="Int32" />
-          <NavigationProperty Name="Categoria" Relationship="Self.FK__Producto__masven__2E1BDC42" FromRole="Producto" ToRole="Categoria" />
-          <NavigationProperty Name="DetallePago" Relationship="Self.FK__DetallePa__idpro__34C8D9D1" FromRole="Producto" ToRole="DetallePago" />
+          <NavigationProperty Name="Categoria" Relationship="Self.FK__Producto__masven__66603565" FromRole="Producto" ToRole="Categoria" />
+          <NavigationProperty Name="DetallePago" Relationship="Self.FK__DetallePa__idpro__6D0D32F4" FromRole="Producto" ToRole="DetallePago" />
+        </EntityType>
+        <EntityType Name="Reclamos">
+          <Key>
+            <PropertyRef Name="idreclamo" />
+          </Key>
+          <Property Name="idreclamo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="idpago" Type="Int32" />
+          <Property Name="telefono" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="descripcion" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="estado" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="fecha" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Pago" Relationship="Self.FK__Reclamos__idpago__75A278F5" FromRole="Reclamos" ToRole="Pago" />
         </EntityType>
         <EntityType Name="Rol">
           <Key>
@@ -236,7 +284,7 @@
           </Key>
           <Property Name="idrol" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="nombrerol" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Usuario" Relationship="Self.FK__Usuario__idrol__267ABA7A" FromRole="Rol" ToRole="Usuario" />
+          <NavigationProperty Name="Usuario" Relationship="Self.FK__Usuario__idrol__5EBF139D" FromRole="Rol" ToRole="Usuario" />
         </EntityType>
         <EntityType Name="Usuario">
           <Key>
@@ -250,10 +298,10 @@
           <Property Name="correo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="contrasenia" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="fechaRegistro" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Pago" Relationship="Self.FK__Pago__total__30F848ED" FromRole="Usuario" ToRole="Pago" />
-          <NavigationProperty Name="Rol" Relationship="Self.FK__Usuario__idrol__267ABA7A" FromRole="Usuario" ToRole="Rol" />
+          <NavigationProperty Name="Pago" Relationship="Self.FK__Pago__total__693CA210" FromRole="Usuario" ToRole="Pago" />
+          <NavigationProperty Name="Rol" Relationship="Self.FK__Usuario__idrol__5EBF139D" FromRole="Usuario" ToRole="Rol" />
         </EntityType>
-        <Association Name="FK__Producto__masven__2E1BDC42">
+        <Association Name="FK__Producto__masven__66603565">
           <End Role="Categoria" Type="Self.Categoria" Multiplicity="1" />
           <End Role="Producto" Type="Self.Producto" Multiplicity="*" />
           <ReferentialConstraint>
@@ -265,7 +313,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__DetallePa__idpag__33D4B598">
+        <Association Name="FK__DetallePa__idpag__6C190EBB">
           <End Role="Pago" Type="Self.Pago" Multiplicity="1" />
           <End Role="DetallePago" Type="Self.DetallePago" Multiplicity="*" />
           <ReferentialConstraint>
@@ -277,7 +325,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__DetallePa__idpro__34C8D9D1">
+        <Association Name="FK__DetallePa__idpro__6D0D32F4">
           <End Role="Producto" Type="Self.Producto" Multiplicity="1" />
           <End Role="DetallePago" Type="Self.DetallePago" Multiplicity="*" />
           <ReferentialConstraint>
@@ -289,7 +337,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Pago__total__30F848ED">
+        <Association Name="FK__Pago__total__693CA210">
           <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
           <End Role="Pago" Type="Self.Pago" Multiplicity="*" />
           <ReferentialConstraint>
@@ -301,7 +349,19 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Usuario__idrol__267ABA7A">
+        <Association Name="FK__Reclamos__idpago__75A278F5">
+          <End Role="Pago" Type="Self.Pago" Multiplicity="0..1" />
+          <End Role="Reclamos" Type="Self.Reclamos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pago">
+              <PropertyRef Name="idpago" />
+            </Principal>
+            <Dependent Role="Reclamos">
+              <PropertyRef Name="idpago" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Usuario__idrol__5EBF139D">
           <End Role="Rol" Type="Self.Rol" Multiplicity="0..1" />
           <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
           <ReferentialConstraint>
@@ -318,32 +378,44 @@
           <EntitySet Name="DetallePago" EntityType="Self.DetallePago" />
           <EntitySet Name="Pago" EntityType="Self.Pago" />
           <EntitySet Name="Producto" EntityType="Self.Producto" />
+          <EntitySet Name="Reclamos" EntityType="Self.Reclamos" />
           <EntitySet Name="Rol" EntityType="Self.Rol" />
           <EntitySet Name="Usuario" EntityType="Self.Usuario" />
-          <AssociationSet Name="FK__Producto__masven__2E1BDC42" Association="Self.FK__Producto__masven__2E1BDC42">
+          <AssociationSet Name="FK__Producto__masven__66603565" Association="Self.FK__Producto__masven__66603565">
             <End Role="Categoria" EntitySet="Categoria" />
             <End Role="Producto" EntitySet="Producto" />
           </AssociationSet>
-          <AssociationSet Name="FK__DetallePa__idpag__33D4B598" Association="Self.FK__DetallePa__idpag__33D4B598">
+          <AssociationSet Name="FK__DetallePa__idpag__6C190EBB" Association="Self.FK__DetallePa__idpag__6C190EBB">
             <End Role="Pago" EntitySet="Pago" />
             <End Role="DetallePago" EntitySet="DetallePago" />
           </AssociationSet>
-          <AssociationSet Name="FK__DetallePa__idpro__34C8D9D1" Association="Self.FK__DetallePa__idpro__34C8D9D1">
+          <AssociationSet Name="FK__DetallePa__idpro__6D0D32F4" Association="Self.FK__DetallePa__idpro__6D0D32F4">
             <End Role="Producto" EntitySet="Producto" />
             <End Role="DetallePago" EntitySet="DetallePago" />
           </AssociationSet>
-          <AssociationSet Name="FK__Pago__total__30F848ED" Association="Self.FK__Pago__total__30F848ED">
+          <AssociationSet Name="FK__Pago__total__693CA210" Association="Self.FK__Pago__total__693CA210">
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="Pago" EntitySet="Pago" />
           </AssociationSet>
-          <AssociationSet Name="FK__Usuario__idrol__267ABA7A" Association="Self.FK__Usuario__idrol__267ABA7A">
+          <AssociationSet Name="FK__Reclamos__idpago__75A278F5" Association="Self.FK__Reclamos__idpago__75A278F5">
+            <End Role="Pago" EntitySet="Pago" />
+            <End Role="Reclamos" EntitySet="Reclamos" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Usuario__idrol__5EBF139D" Association="Self.FK__Usuario__idrol__5EBF139D">
             <End Role="Rol" EntitySet="Rol" />
             <End Role="Usuario" EntitySet="Usuario" />
           </AssociationSet>
+          <FunctionImport Name="compradetalle" ReturnType="Collection(ciberstyleModel.compradetalle_Result)">
+            <Parameter Name="idpago" Mode="In" Type="Int32" />
+          </FunctionImport>
           <FunctionImport Name="login_usuario" ReturnType="Collection(ciberstyleModel.login_usuario_Result)">
             <Parameter Name="correo" Mode="In" Type="String" />
             <Parameter Name="contrasenia" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="mostrarUltimoPago" ReturnType="Collection(ciberstyleModel.mostrarUltimoPago_Result)">
+            <Parameter Name="idUsuario" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="p_productoGeneral" ReturnType="Collection(ciberstyleModel.p_productoGeneral_Result)" />
           <FunctionImport Name="p_productoMasVendido02" ReturnType="Collection(ciberstyleModel.p_productoMasVendido02_Result)" />
           <FunctionImport Name="p_registrarProducto">
             <Parameter Name="nombre" Mode="In" Type="String" />
@@ -353,8 +425,13 @@
             <Parameter Name="imagen" Mode="In" Type="Binary" />
             <Parameter Name="stock" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="p_productoGeneral" ReturnType="Collection(ciberstyleModel.p_productoGeneral_Result)" />
         </EntityContainer>
+        <ComplexType Name="compradetalle_Result">
+          <Property Type="String" Name="nombre" Nullable="false" MaxLength="100" />
+          <Property Type="Int32" Name="cantidad" Nullable="true" />
+          <Property Type="Decimal" Name="subtotal" Nullable="true" Precision="9" Scale="2" />
+          <Property Type="Decimal" Name="total" Nullable="true" Precision="9" Scale="2" />
+        </ComplexType>
         <ComplexType Name="login_usuario_Result">
           <Property Type="Int32" Name="idusuario" Nullable="false" />
           <Property Type="Int32" Name="idrol" Nullable="true" />
@@ -364,17 +441,29 @@
           <Property Type="String" Name="correo" Nullable="true" MaxLength="100" />
           <Property Type="DateTime" Name="fechaRegistro" Nullable="true" Precision="23" />
         </ComplexType>
-        <ComplexType Name="p_productoMasVendido02_Result">
+        <ComplexType Name="mostrarUltimoPago_Result">
+          <Property Type="Int32" Name="idpago" Nullable="false" />
+          <Property Type="Int32" Name="idusuario" Nullable="true" />
+          <Property Type="DateTime" Name="fechaPago" Nullable="true" Precision="23" />
+          <Property Type="String" Name="nomTarjeta" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="numTarjeta" Nullable="true" MaxLength="16" />
+          <Property Type="String" Name="annio" Nullable="true" MaxLength="4" />
+          <Property Type="String" Name="mes" Nullable="true" MaxLength="2" />
+          <Property Type="String" Name="cvv" Nullable="true" MaxLength="4" />
+          <Property Type="Decimal" Name="total" Nullable="true" Precision="9" Scale="2" />
+        </ComplexType>
+        <ComplexType Name="p_productoGeneral_Result">
           <Property Type="Int32" Name="idproducto" Nullable="false" />
           <Property Type="String" Name="nombre" Nullable="false" MaxLength="100" />
           <Property Type="String" Name="descripcion" Nullable="false" MaxLength="100" />
           <Property Type="Decimal" Name="precio" Nullable="true" Precision="18" Scale="0" />
           <Property Type="Binary" Name="imagen" Nullable="false" MaxLength="Max" />
         </ComplexType>
-        <ComplexType Name="p_productoGeneral_Result">
+        <ComplexType Name="p_productoMasVendido02_Result">
           <Property Type="Int32" Name="idproducto" Nullable="false" />
           <Property Type="String" Name="nombre" Nullable="false" MaxLength="100" />
           <Property Type="String" Name="descripcion" Nullable="false" MaxLength="100" />
+          <Property Type="Decimal" Name="precio" Nullable="true" Precision="18" Scale="0" />
           <Property Type="Binary" Name="imagen" Nullable="false" MaxLength="Max" />
         </ComplexType>
       </Schema>
@@ -432,6 +521,18 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Reclamos">
+            <EntityTypeMapping TypeName="ciberstyleModel.Reclamos">
+              <MappingFragment StoreEntitySet="Reclamos">
+                <ScalarProperty Name="idreclamo" ColumnName="idreclamo" />
+                <ScalarProperty Name="idpago" ColumnName="idpago" />
+                <ScalarProperty Name="telefono" ColumnName="telefono" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="fecha" ColumnName="fecha" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Rol">
             <EntityTypeMapping TypeName="ciberstyleModel.Rol">
               <MappingFragment StoreEntitySet="Rol">
@@ -454,6 +555,16 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="compradetalle" FunctionName="ciberstyleModel.Store.compradetalle">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ciberstyleModel.compradetalle_Result">
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+                <ScalarProperty Name="subtotal" ColumnName="subtotal" />
+                <ScalarProperty Name="total" ColumnName="total" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="login_usuario" FunctionName="ciberstyleModel.Store.login_usuario">
             <ResultMapping>
               <ComplexTypeMapping TypeName="ciberstyleModel.login_usuario_Result">
@@ -464,6 +575,32 @@
                 <ScalarProperty Name="dni" ColumnName="dni" />
                 <ScalarProperty Name="correo" ColumnName="correo" />
                 <ScalarProperty Name="fechaRegistro" ColumnName="fechaRegistro" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="mostrarUltimoPago" FunctionName="ciberstyleModel.Store.mostrarUltimoPago">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ciberstyleModel.mostrarUltimoPago_Result">
+                <ScalarProperty Name="idpago" ColumnName="idpago" />
+                <ScalarProperty Name="idusuario" ColumnName="idusuario" />
+                <ScalarProperty Name="fechaPago" ColumnName="fechaPago" />
+                <ScalarProperty Name="nomTarjeta" ColumnName="nomTarjeta" />
+                <ScalarProperty Name="numTarjeta" ColumnName="numTarjeta" />
+                <ScalarProperty Name="annio" ColumnName="annio" />
+                <ScalarProperty Name="mes" ColumnName="mes" />
+                <ScalarProperty Name="cvv" ColumnName="cvv" />
+                <ScalarProperty Name="total" ColumnName="total" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="p_productoGeneral" FunctionName="ciberstyleModel.Store.p_productoGeneral">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ciberstyleModel.p_productoGeneral_Result">
+                <ScalarProperty Name="idproducto" ColumnName="idproducto" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="precio" ColumnName="precio" />
+                <ScalarProperty Name="imagen" ColumnName="imagen" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -479,16 +616,6 @@
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="p_registrarProducto" FunctionName="ciberstyleModel.Store.p_registrarProducto" />
-          <FunctionImportMapping FunctionImportName="p_productoGeneral" FunctionName="ciberstyleModel.Store.p_productoGeneral">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="ciberstyleModel.p_productoGeneral_Result">
-                <ScalarProperty Name="idproducto" ColumnName="idproducto" />
-                <ScalarProperty Name="nombre" ColumnName="nombre" />
-                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
-                <ScalarProperty Name="imagen" ColumnName="imagen" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

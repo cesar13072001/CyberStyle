@@ -137,6 +137,9 @@
     <Compile Include="Models\Categoria.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\compradetalle_Result.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\DetallePago.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
@@ -158,6 +161,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Model.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\mostrarUltimoPago_Result.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Pago.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
@@ -168,6 +174,9 @@
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\p_productoMasVendido02_Result.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Reclamos.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Rol.cs">
@@ -212,6 +221,11 @@
     </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Content\Imagenes\01.webp" />
+    <Content Include="Content\Imagenes\02.webp" />
+    <Content Include="Content\Imagenes\03.webp" />
+    <Content Include="Content\Imagenes\1869858_1.webp" />
+    <Content Include="Content\Imagenes\Prenda.webp" />
     <EntityDeploy Include="Models\Model.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Model.Designer.cs</LastGenOutput>
@@ -219,11 +233,6 @@
     <Content Include="Models\Model.edmx.diagram">
       <DependentUpon>Model.edmx</DependentUpon>
     </Content>
-    <Content Include="Content\Imagenes\01.webp" />
-    <Content Include="Content\Imagenes\02.webp" />
-    <Content Include="Content\Imagenes\03.webp" />
-    <Content Include="Content\Imagenes\1869858_1.webp" />
-    <Content Include="Content\Imagenes\Prenda.webp" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

@@ -4,18 +4,20 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="a77f7a1f80924488bad988d761f43b7a" Name="Diagram1">
-        <EntityTypeShape EntityType="ciberstyleModel.Categoria" Width="1.5" PointX="3" PointY="5.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="ciberstyleModel.DetallePago" Width="1.5" PointX="7.5" PointY="1.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ciberstyleModel.Pago" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="ciberstyleModel.Producto" Width="1.5" PointX="5.25" PointY="5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ciberstyleModel.Rol" Width="1.5" PointX="0.75" PointY="1.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ciberstyleModel.Usuario" Width="1.5" PointX="3" PointY="1.125" IsExpanded="true" />
-        <AssociationConnector Association="ciberstyleModel.FK__Producto__masven__2E1BDC42" ManuallyRouted="false" />
-        <AssociationConnector Association="ciberstyleModel.FK__DetallePa__idpag__33D4B598" ManuallyRouted="false" />
-        <AssociationConnector Association="ciberstyleModel.FK__DetallePa__idpro__34C8D9D1" ManuallyRouted="false" />
-        <AssociationConnector Association="ciberstyleModel.FK__Pago__total__30F848ED" ManuallyRouted="false" />
-        <AssociationConnector Association="ciberstyleModel.FK__Usuario__idrol__267ABA7A" ManuallyRouted="false" />
+      <Diagram DiagramId="9c9ed14248564e1d804a680f8b8807c9" Name="Diagram1">
+        <EntityTypeShape EntityType="ciberstyleModel.Categoria" Width="1.5" PointX="3" PointY="6.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ciberstyleModel.DetallePago" Width="1.5" PointX="7.5" PointY="1.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ciberstyleModel.Pago" Width="1.5" PointX="5.25" PointY="2.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ciberstyleModel.Producto" Width="1.5" PointX="5.25" PointY="6.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ciberstyleModel.Reclamos" Width="1.5" PointX="7.5" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ciberstyleModel.Rol" Width="1.5" PointX="0.75" PointY="2.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ciberstyleModel.Usuario" Width="1.5" PointX="3" PointY="2.25" IsExpanded="true" />
+        <AssociationConnector Association="ciberstyleModel.FK__Producto__masven__66603565" ManuallyRouted="false" />
+        <AssociationConnector Association="ciberstyleModel.FK__DetallePa__idpag__6C190EBB" ManuallyRouted="false" />
+        <AssociationConnector Association="ciberstyleModel.FK__DetallePa__idpro__6D0D32F4" ManuallyRouted="false" />
+        <AssociationConnector Association="ciberstyleModel.FK__Pago__total__693CA210" ManuallyRouted="false" />
+        <AssociationConnector Association="ciberstyleModel.FK__Reclamos__idpago__75A278F5" ManuallyRouted="false" />
+        <AssociationConnector Association="ciberstyleModel.FK__Usuario__idrol__5EBF139D" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -31,8 +31,18 @@ namespace CyberStyle.Models
         public virtual DbSet<DetallePago> DetallePago { get; set; }
         public virtual DbSet<Pago> Pago { get; set; }
         public virtual DbSet<Producto> Producto { get; set; }
+        public virtual DbSet<Reclamos> Reclamos { get; set; }
         public virtual DbSet<Rol> Rol { get; set; }
         public virtual DbSet<Usuario> Usuario { get; set; }
+    
+        public virtual ObjectResult<compradetalle_Result> compradetalle(Nullable<int> idpago)
+        {
+            var idpagoParameter = idpago.HasValue ?
+                new ObjectParameter("idpago", idpago) :
+                new ObjectParameter("idpago", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<compradetalle_Result>("compradetalle", idpagoParameter);
+        }
     
         public virtual ObjectResult<login_usuario_Result> login_usuario(string correo, string contrasenia)
         {
@@ -45,6 +55,20 @@ namespace CyberStyle.Models
                 new ObjectParameter("contrasenia", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<login_usuario_Result>("login_usuario", correoParameter, contraseniaParameter);
+        }
+    
+        public virtual ObjectResult<mostrarUltimoPago_Result> mostrarUltimoPago(Nullable<int> idUsuario)
+        {
+            var idUsuarioParameter = idUsuario.HasValue ?
+                new ObjectParameter("idUsuario", idUsuario) :
+                new ObjectParameter("idUsuario", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<mostrarUltimoPago_Result>("mostrarUltimoPago", idUsuarioParameter);
+        }
+    
+        public virtual ObjectResult<p_productoGeneral_Result> p_productoGeneral()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<p_productoGeneral_Result>("p_productoGeneral");
         }
     
         public virtual ObjectResult<p_productoMasVendido02_Result> p_productoMasVendido02()
@@ -79,11 +103,6 @@ namespace CyberStyle.Models
                 new ObjectParameter("stock", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("p_registrarProducto", nombreParameter, descripcionParameter, categoriaParameter, precioParameter, imagenParameter, stockParameter);
-        }
-    
-        public virtual ObjectResult<p_productoGeneral_Result> p_productoGeneral()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<p_productoGeneral_Result>("p_productoGeneral");
         }
     }
 }
