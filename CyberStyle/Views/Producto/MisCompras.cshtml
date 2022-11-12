@@ -1,0 +1,158 @@
+﻿@model IEnumerable<CyberStyle.Models.Pago>
+
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>List</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-dark  ">
+
+        <div class="container-fluid">
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarText">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" style="color: white" href="/Producto/Index">Inicio<i class="fa-solid fa-house"></i></a>
+                    </li>
+
+                    @foreach (var item in Session["user"] as List<CyberStyle.Models.login_usuario_Result>)
+                    {
+                        if (item.idusuario == 1)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" style="color: white" href="/Producto/Listar">Productos<i class="fa-solid fa-shirt"></i></a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" style="color: white" href="/Producto/ListadoCompras">Listado de compras<i class="fa-solid fa-cart-shopping"></i></a>
+                            </li>
+                        }
+                    }
+
+                    <li class="nav-item">
+                        <a class="nav-link" style="color: white" href="/Producto/MisCompras">Mis Compras<i class="fa-solid fa-cart-shopping"></i></a>
+                    </li>
+
+
+
+
+                    <li class="nav-item " style="float: left;margin-left: 870px;">
+                        <a class="nav-link" style="color: white" href="/Usuario/Salir">Cerrar Sección<i class="fa-solid fa-power-off"></i></a>
+                    </li>
+                </ul>
+
+
+            </div>
+
+
+
+        </div>
+
+    </nav>
+
+
+
+    <div class="container">
+        <br />
+        <br />
+        <h1>Mis compras Usuario</h1>
+
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.idpago)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.idusuario)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.fechaPago)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.nomTarjeta)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.numTarjeta)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.annio)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.mes)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.cvv)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.total)
+                </th>
+
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.idpago)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.idusuario)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.fechaPago)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.nomTarjeta)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.numTarjeta)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.annio)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.mes)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.cvv)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.total)
+                    </td>
+
+                </tr>
+            }
+
+        </table>
+
+    </div>
+    <script src="https://kit.fontawesome.com/9a82813591.js" crossorigin="anonymous"></script>
+    <script>
+        window.watsonAssistantChatOptions = {
+            integrationID: "56785897-5dd7-45ad-ae02-39458dd43785", // The ID of this integration.
+            region: "au-syd", // The region your integration is hosted in.
+            serviceInstanceID: "ab7516c2-e0f5-4e57-b5f1-cc3f3e712847", // The ID of your service instance.
+            onLoad: function (instance) { instance.render(); }
+        };
+        setTimeout(function () {
+            const t = document.createElement('script');
+            t.src = "https://web-chat.global.assistant.watson.appdomain.cloud/versions/" + (window.watsonAssistantChatOptions.clientVersion || 'latest') + "/WatsonAssistantChatEntry.js";
+            document.head.appendChild(t);
+        });
+    </script>
+
+</body>
+</html>

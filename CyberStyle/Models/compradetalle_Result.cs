@@ -11,12 +11,11 @@ namespace CyberStyle.Models
 {
     using System;
     
-    public partial class p_productoGeneral_Result
+    public partial class compradetalle_Result
     {
-        public int idproducto { get; set; }
         public string nombre { get; set; }
-        public string descripcion { get; set; }
-        public Nullable<decimal> precio { get; set; }
-        public byte[] imagen { get; set; }
+        public Nullable<int> cantidad { get; set; }
+        public Nullable<decimal> subtotal { get; set; }
+        public Nullable<decimal> total { get; set; }
     }
 }

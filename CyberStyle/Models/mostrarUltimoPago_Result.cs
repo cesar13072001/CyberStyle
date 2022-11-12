@@ -10,17 +10,9 @@
 namespace CyberStyle.Models
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class Pago
+    public partial class mostrarUltimoPago_Result
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Pago()
-        {
-            this.DetallePago = new HashSet<DetallePago>();
-            this.Reclamos = new HashSet<Reclamos>();
-        }
-    
         public int idpago { get; set; }
         public Nullable<int> idusuario { get; set; }
         public Nullable<System.DateTime> fechaPago { get; set; }
@@ -30,11 +22,5 @@ namespace CyberStyle.Models
         public string mes { get; set; }
         public string cvv { get; set; }
         public Nullable<decimal> total { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DetallePago> DetallePago { get; set; }
-        public virtual Usuario Usuario { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Reclamos> Reclamos { get; set; }
     }
 }

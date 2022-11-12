@@ -129,15 +129,26 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\PagoController.cs" />
     <Compile Include="Controllers\ProductoController.cs" />
     <Compile Include="Controllers\UsuarioController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\CarritoItem.cs" />
     <Compile Include="Models\Categoria.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\compradetalle_Result.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\DetallePago.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\listar_compras_Result.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\listar_fecha_Result.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\login_usuario_Result.cs">
@@ -158,6 +169,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Model.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\mostrarUltimoPago_Result.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Pago.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
@@ -168,6 +182,9 @@
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\p_productoMasVendido02_Result.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Reclamos.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Rol.cs">
@@ -192,9 +209,11 @@
     <Content Include="Content\Imagenes\img\google-play-badge.svg" />
     <Content Include="Content\Imagenes\img\portrait_black.png" />
     <Content Include="Content\Imagenes\img\tnw-logo.svg" />
+    <Content Include="Content\Imagenes\loading.gif" />
     <Content Include="Content\Imagenes\logo.png" />
     <Content Include="Content\Imagenes\Prenda.png" />
     <Content Include="Content\Imagenes\shopping-cart.png" />
+    <Content Include="Content\Imagenes\success.gif" />
     <Content Include="Content\styles.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -212,6 +231,11 @@
     </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Content\Imagenes\01.webp" />
+    <Content Include="Content\Imagenes\02.webp" />
+    <Content Include="Content\Imagenes\03.webp" />
+    <Content Include="Content\Imagenes\1869858_1.webp" />
+    <Content Include="Content\Imagenes\Prenda.webp" />
     <EntityDeploy Include="Models\Model.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Model.Designer.cs</LastGenOutput>
@@ -219,11 +243,6 @@
     <Content Include="Models\Model.edmx.diagram">
       <DependentUpon>Model.edmx</DependentUpon>
     </Content>
-    <Content Include="Content\Imagenes\01.webp" />
-    <Content Include="Content\Imagenes\02.webp" />
-    <Content Include="Content\Imagenes\03.webp" />
-    <Content Include="Content\Imagenes\1869858_1.webp" />
-    <Content Include="Content\Imagenes\Prenda.webp" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -254,6 +273,11 @@
     <Content Include="Views\Producto\Listar.cshtml" />
     <Content Include="Views\Producto\Create.cshtml" />
     <Content Include="Views\Producto\Edit.cshtml" />
+    <Content Include="Views\Pago\pago.cshtml" />
+    <Content Include="Views\Pago\FinalizarCompra.cshtml" />
+    <Content Include="Views\Producto\MisCompras.cshtml" />
+    <Content Include="Views\Producto\ListadoCompras.cshtml" />
+    <Content Include="Views\Producto\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

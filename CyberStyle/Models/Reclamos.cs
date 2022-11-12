@@ -10,13 +10,17 @@
 namespace CyberStyle.Models
 {
     using System;
+    using System.Collections.Generic;
     
-    public partial class p_productoGeneral_Result
+    public partial class Reclamos
     {
-        public int idproducto { get; set; }
-        public string nombre { get; set; }
+        public string idreclamo { get; set; }
+        public Nullable<int> idpago { get; set; }
+        public string telefono { get; set; }
         public string descripcion { get; set; }
-        public Nullable<decimal> precio { get; set; }
-        public byte[] imagen { get; set; }
+        public string estado { get; set; }
+        public string fecha { get; set; }
+    
+        public virtual Pago Pago { get; set; }
     }
 }

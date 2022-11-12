@@ -18,6 +18,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,600;1,600&amp;display=swap" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,300;0,500;0,600;0,700;1,300;1,500;1,600;1,700&amp;display=swap" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,400;1,400&amp;display=swap" rel="stylesheet" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <!-- Core theme CSS (includes Bootstrap)-->
     @Styles.Render("~/Content/styles.css")
     <style>
@@ -25,52 +26,52 @@
             margin: 5px;
         }
     </style>
-    <script>window.onload = function () {
+    <script>
+        window.onload = function () {
 
             var valor = 0;
 
             $('#openCart').click(function () {
 
                 if (valor == 0) {
-                    $('#carritoModal').css("top","0")
+                    $('#carritoModal').css("top", "0")
                     $('#carritoModal').css("transition", "all .5s ease-in-out")
                     valor = 1;
                     if (valor == 1) {
-                            setTimeout(function () {
-                             // $('#carritoModal').css("background-color", "rgba(130, 130, 130,0.4)")
-                            }, 300);
+                        setTimeout(function () {
+                            // $('#carritoModal').css("background-color", "rgba(130, 130, 130,0.4)")
+                        }, 300);
                     }
                 }
                 else if (valor == 1) {
                     valor = 0;
-                    setTimeout(function ()
-                    {
+                    setTimeout(function () {
 
                         if (valor === 0) {
                             setTimeout(function () {
-                               // $('#carritoModal').css("background", "rgba(130, 130, 130,0)")
-                            },0.0);
+                                // $('#carritoModal').css("background", "rgba(130, 130, 130,0)")
+                            }, 0.0);
                         }
                         setTimeout(function () {
                             $('#carritoModal').css("top", "-1000px");
                             $('#carritoModal').css("transition", "all .5s ease-in-out")
-                        },50);
+                        }, 50);
 
-                    },0.0)
+                    }, 0.0)
 
                 }
 
             });
 
-             $('#seguirComp').click(function () {
+            $('#seguirComp').click(function () {
 
-                 setTimeout(function () {
-                     $('#carritoModal').css("top", "-1000px");
-                     $('#carritoModal').css("transition", "all .5s ease-in-out")
-                 }, 100);
-                 valor = 0;
+                setTimeout(function () {
+                    $('#carritoModal').css("top", "-1000px");
+                    $('#carritoModal').css("transition", "all .5s ease-in-out")
+                }, 100);
+                valor = 0;
 
-             })
+            })
 
         }</script>
 
@@ -96,10 +97,37 @@
     <br />
     <!------>
     @{ double total = 0; }
+
     <div class="vw-100 vh-100  d-flex flex-row-reverse" id="carritoModal" style="padding-top: 50px;padding-right:25px; position: fixed; z-index:100;top:-1000px;">
         <div class="m-4 modal-fer" style="width:400px;background:white;height:400px;padding:10px 0px;box-shadow:1px 1px 30px gray;border-radius:15px; ">
             <div style="overflow:scroll;height:250px;overflow-x: hidden;background:white;">
                 <table class="table table-hover">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Codigo</th>
+                            <th>Descripcion</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Session["carrito"] != null)
+                        {
+
+                            foreach (var item in Session["carrito"] as List<CyberStyle.Models.CarritoItem>)
+                            {
+                                total += (Double)(item.Cantidad * item.Producto.precio);
+            <tr>
+                <td><img src="@Url.Action("getImage","Producto", new { id = item.Producto.idproducto})" width="70px"></td>
+                <td>
+                    <p style="font-size:13px;">@item.Producto.nombre<br>@item.Producto.descripcion<br><b>Cantidad</b>  @item.Cantidad</p>
+                </td>
+                <td>
+                    <h6 class="text-center">@String.Format("{0:C}", @item.Cantidad * @item.Producto.precio)</h6>
+                    <a class="btn btn-transparent" style="color:red;" href="@Url.Action("Eliminar","Home", new {Id=item.Producto.idproducto})">Eliminar</a>
+                </td>
+            </tr>
+}
+    }
+                    </tbody>
                 </table>
             </div>
             <div>
@@ -129,8 +157,7 @@
                 <ul class="navbar-nav ms-auto me-4 my-3 my-lg-0">
                     <li class="nav-item"><img id="openCart" src="../Content/Imagenes/shopping-cart.png"></li>
                 </ul>
-                @{
-                    if (Session["user"] == null)
+                @{ if (Session["user"] == null)
                     {
 
         <a href="/Usuario/Registro" class="btn btn-primary rounded-pill px-3 mb-2 mb-lg-0">
@@ -143,17 +170,14 @@
                         <a href="/Usuario/Login" class="btn btn-primary rounded-pill px-3 mb-2 mb-lg-0">
                             Iniciar Sesion
                         </a> }
-                                    else
-                                    {
-                                        <a href="/Producto/Listar" class="btn btn-primary rounded-pill px-3 mb-2 mb-lg-0">
-                                            Mi portal
-                                        </a>
-                                        <a href="/Usuario/Salir" class="btn btn-primary rounded-pill px-3 mb-2 mb-lg-0">
-                                            Cerrar Sesión
-                                        </a>
-
-                                    }
-                }
+                    else
+                    {
+        <a href="/Producto/Index" class="btn btn-primary rounded-pill px-3 mb-2 mb-lg-0">
+            Mi portal
+        </a>
+                        <a href="/Usuario/Salir" class="btn btn-primary rounded-pill px-3 mb-2 mb-lg-0">
+                            Cerrar Sesión
+                        </a> } }
 
             </div>
         </div>
@@ -200,18 +224,20 @@
     <br>
     <!-- App features section-->
     <section id="features">
-        <h3 class="text-center">Productos Mas Vendidos</h3>
+        <h3 class="text-center" style="font-family:Arial;font-weight:bold;">Productos Mas Vendidos</h3>
         <div class="container px-5">
             <div class="row gx-5 align-items-center">
 
                 @foreach (var item in Model)
                 {
     <div class="card" style="width: 18rem;">
+        <input type="hidden" value="@item.idproducto" />
         <img class="card-img-top" src="@Url.Action("getImage","Producto", new { id = item.idproducto})" alt="Card image cap">
         <div class="card-body">
             <p class="card-text">@item.nombre</p>
-            <h6 class="text-center" style="color:red;font-weight:bold;font-family:Arial, Helvetica, sans-serif;">S/. 69.50</h6>
-            <button style="width:100%;" class="btn btn-primary">Añadir al carrito</button>
+            <h6 class="text-center">@String.Format("{0:C}", @item.precio)</h6>
+            <input type="number" class="form-control" min="1" value="value" style="width: 100px; margin-right: 5px; border: 1px solid #0ABBB0;" /><br />
+            <button class="agregar btn btn-primary" style="width:100%;">Añadir al carrito</button>
         </div>
     </div>}
 
@@ -220,24 +246,22 @@
         </div>
     </section>
     <hr />
-
     <section id="features">
-        <h3 class="text-center">Nuestros productos</h3>
+        <h3 class="text-center" style="font-family:Arial;font-weight:bold;">Nuestros productos</h3>
         <div class="container px-5">
             <div class="row gx-5 align-items-center">
                 @foreach (var item in ViewBag.lista02)
                 {
-                <div class="card" style="width: 18rem;">
-                    <img class="card-img-top" src="@Url.Action("getImage","Producto", new { id = item.idproducto})" alt="Card image cap">
-                    <div class="card-body">
-                        <p class="card-text">@item.nombre</p>
-                        <h6 class="text-center" style="color:red;font-weight:bold;font-family:Arial, Helvetica, sans-serif;">S/. 69.50</h6>
-                        <button style="width:100%;" class="btn btn-primary">Añadir al carrito</button>
-                    </div>
-                </div>
-    }
-
-
+    <div class="card" style="width: 18rem;height:500px;">
+        <input type="hidden" value="@item.idproducto" />
+        <img class="card-img-top" src="@Url.Action("getImage","Producto", new { id = item.idproducto})" alt="Card image cap">
+        <div class="card-body">
+            <b><p class="card-text">@item.nombre</p></b>
+            <b><h6 class="text-center">@String.Format("{0:C}", @item.precio)</h6></b>
+            <input type="number" class="form-control" min="1" value="1" style="width: 100px; margin-right: 5px; border: 1px solid #0ABBB0;" /><br />
+            <button class="agregar btn btn-primary" style="width:100%;">Añadir al carrito</button>
+        </div>
+    </div>}
             </div>
         </div>
     </section>
@@ -292,81 +316,9 @@
             </div>
         </div>
     </footer>
-    <!-- Feedback Modal-->
-    <div class="modal fade" id="feedbackModal" tabindex="-1" aria-labelledby="feedbackModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header bg-gradient-primary-to-secondary p-4">
-                    <h5 class="modal-title font-alt text-white" id="feedbackModalLabel">Bienvendo a CiberStyle!</h5>
-                    <button class="btn-close btn-close-white" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body border-0 p-4">
-                    <!-- * * * * * * * * * * * * * * *-->
-                    <!-- * * SB Forms Contact Form * *-->
-                    <!-- * * * * * * * * * * * * * * *-->
-                    <!-- This form is pre-integrated with SB Forms.-->
-                    <!-- To make this form functional, sign up at-->
-                    <!-- https://startbootstrap.com/solution/contact-forms-->
-                    <!-- to get an API token!-->
-                    <form id="contactForm" data-sb-form-api-token="API_TOKEN">
-                        <!-- Name input-->
-                        <div class="form-floating mb-3">
-                            <input class="form-control" id="name" type="text" placeholder="Enter your name..." data-sb-validations="required" />
-                            <label for="name">Nombres</label>
-                            <div class="invalid-feedback" data-sb-feedback="name:required">Ingresa tu nombre</div>
-                        </div>
-                        <!-- Email address input-->
-                        <div class="form-floating mb-3">
-                            <input class="form-control" id="email" type="email" placeholder="name@example.com" data-sb-validations="required,email" />
-                            <label for="email">Correo Electronico</label>
-                            <div class="invalid-feedback" data-sb-feedback="email:required">El correo es requerido</div>
-                            <div class="invalid-feedback" data-sb-feedback="email:email">Correo Invalido</div>
-                        </div>
-                        <!-- Phone number input-->
-                        <div class="form-floating mb-3">
-                            <input class="form-control" id="phone" type="password" placeholder="Ingresa tu contraseña" data-sb-validations="required" />
-                            <label for="phone">Contraseña</label>
-                            <div class="invalid-feedback" data-sb-feedback="phone:required">Ingresa una contraseña</div>
-                        </div>
-                        <!-- Phone number input-->
-                        <div class="form-floating mb-3">
-                            <input class="form-control" id="phone" type="tel" placeholder="(123) 456-7890" data-sb-validations="required" />
-                            <label for="phone">Celular</label>
-                            <div class="invalid-feedback" data-sb-feedback="phone:required">Celular es requerido</div>
-                        </div>
-
-                        <!-- Submit success message-->
-                        <!---->
-                        <!-- This is what your users will see when the form-->
-                        <!-- has successfully submitted-->
-                        <div class="d-none" id="submitSuccessMessage">
-                            <div class="text-center mb-3">
-                                <div class="fw-bolder">Form submission successful!</div>
-                                To activate this form, sign up at
-                                <br />
-                                <a href="https://startbootstrap.com/solution/contact-forms">https://startbootstrap.com/solution/contact-forms</a>
-                            </div>
-                        </div>
-                        <!-- Submit error message-->
-                        <!---->
-                        <!-- This is what your users will see when there is-->
-                        <!-- an error submitting the form-->
-                        <div class="d-none" id="submitErrorMessage"><div class="text-center text-danger mb-3">Error sending message!</div></div>
-                        <!-- Submit Button-->
-                        <div class="d-grid"><button class="btn btn-primary rounded-pill btn-lg disabled" id="submitButton" type="submit">Registrarme</button></div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Bootstrap core JS-->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
-   
     <script>
         window.watsonAssistantChatOptions = {
-            integrationID: "f45aef39-1313-48af-8956-9aca3e373fcb", // The ID of this integration.
+            integrationID: "56785897-5dd7-45ad-ae02-39458dd43785", // The ID of this integration.
             region: "au-syd", // The region your integration is hosted in.
             serviceInstanceID: "ab7516c2-e0f5-4e57-b5f1-cc3f3e712847", // The ID of your service instance.
             onLoad: function (instance) { instance.render(); }
@@ -377,15 +329,49 @@
             document.head.appendChild(t);
         });
     </script>
-    
-    <!-- Core theme JS-->
 
-    @Scripts.Render("~/Scripts/scripts.js")
-    @Scripts.Render("~/bundles/jquery")
-    <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
-    <!-- * *                               SB Forms JS                               * *-->
-    <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
-    <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
-    <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+    <script>
+        $(function () {
+            $(".agregar").on("click", function (event) {
+                event.preventDefault();
+                var Productoid = $(this).parent().parent().find("input:eq(0)").val();
+                var cantidad = $(this).parent().parent().find("input:eq(1)").val();
+
+                $.ajax(
+                    {
+                        url: "@Url.Action("AgregarCarrito", "Home")",
+                        data: { id: Productoid, cantidad: cantidad },
+                        type: "post",
+                        success: function (response) {
+                            window.location.href = "@Url.Action("AgregarCarrito","Home")"
+
+                        },
+                        error: function (err, error) {
+                            alertify.error('Error');
+                        }
+                    }
+                );
+            });
+
+            $(".numbers").keydown(function () {
+                if ($.inArray(e.keycode, [46, 8, 9, 27, 13, 40]) !== 1 ||
+                    (e.keycode == 65 && e.ctrlkey == true) ||
+                    (e.keycode >= 35 && e.keycode <= 39)){
+                    return;
+                }
+
+                if ((e.shiftkey || (e.keyCode < 48 || e.keycode > 57)) && (e.keyCode < 96 || e.keyCode > 185))
+                {
+                    e.preventDefault();
+                }
+            })
+        })
+    </script>
+    <!-- Bootstrap core JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+
+
 </body>
 </html>

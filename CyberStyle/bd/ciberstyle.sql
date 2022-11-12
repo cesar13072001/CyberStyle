@@ -96,6 +96,19 @@ go
 
 
 
+create table Reclamos
+(
+idreclamo varchar(50) primary key,
+idpago int,
+telefono varchar(20),
+descripcion varchar(200),
+estado varchar(15),
+fecha varchar(10),
+foreign key (idpago) references Pago(idpago)
+)
+go
+
+
 
 /*PROCEDIMIENTOS ALMACENADOS*/
 /*AGUILAR ZAMBRANO*/
@@ -147,6 +160,48 @@ go
 create proc p_productoGeneral
 as
 begin
-	select idproducto,nombre,descripcion,imagen from Producto where  estado = 'Activo' and stock > 0
+	select idproducto,nombre,descripcion,precio,imagen from Producto where  estado = 'Activo' and stock > 0
 end
 go
+
+
+create or ALTER proc mostrarUltimoPago
+@idUsuario int
+as
+begin
+	select TOP 1 * from Pago where idUsuario=@idUsuario
+	order by idPago desc;
+end
+go
+
+
+
+create or alter proc compradetalle
+@idpago int
+as
+begin
+  select pr.nombre, dp.cantidad, dp.subtotal, p.total 
+  from Pago p inner join DetallePago dp
+  on p.idpago = dp.idpago
+  inner join Producto pr 
+  on dp.idproducto = pr.idproducto
+  where p.idpago = @idpago
+end
+go
+
+
+
+
+
+
+
+
+create or alter proc listar_fecha
+@fecha varchar(10)
+as
+begin
+select idpago, idusuario, fechaPago, total from Pago
+where CONVERT(VARCHAR(25), fechaPago, 126) like @fecha +'%' 
+end
+go
+

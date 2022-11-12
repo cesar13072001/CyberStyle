@@ -37,6 +37,22 @@ namespace CyberStyle.Controllers
             return null;
         }
 
+
+        public int Idusuario()
+        {
+            int idrol = -1;
+            if (Session["user"] != null)
+            {
+                foreach (var item in Session["user"] as List<login_usuario_Result>)
+                {
+                    idrol = Int32.Parse(item.idusuario.ToString());
+
+                }
+                return idrol;
+            }
+            return -1;
+        }
+
         public int IdRol()
         {
             int idrol = -1;
@@ -93,8 +109,13 @@ namespace CyberStyle.Controllers
     }
 
 
-        public ActionResult Edit(int id)
+        public ActionResult Edit(int id = -1)
         {
+            if(id == -1)
+            {
+                return RedirectToAction("Listar");
+            }
+
             if (IdRol() == 1)
             {
 
@@ -103,6 +124,34 @@ namespace CyberStyle.Controllers
             return View(producto);
             }
             return RedirectToAction("Index", "Home");
+        }
+
+
+        public ActionResult ListadoCompras(String fecha="")
+        {
+            if(fecha != "")
+            {
+                var result = db.listar_fecha(fecha).ToList();
+                return View(result);
+            }
+            else
+            {
+                var result2 = db.listar_fecha("").ToList();
+                return View(result2);
+            }   
+        }
+
+
+        public ActionResult MisCompras()
+        {
+            if (IdRol() == 1 || IdRol() == 2)
+            {
+                int idusu = Idusuario();
+                var result = db.Pago.Where(x => x.idusuario == idusu).ToList();
+                return View(result);
+            }
+            return RedirectToAction("Index", "Home");
+ 
         }
 
 
