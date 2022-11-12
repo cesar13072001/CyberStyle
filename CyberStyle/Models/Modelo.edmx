@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="ciberstyleModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="ciberstyleModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Categoria">
           <Key>
             <PropertyRef Name="idcategoria" />
@@ -176,7 +176,8 @@
             <End Role="Usuario" EntitySet="Usuario" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ciberstyleModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -347,6 +348,10 @@
             <Parameter Name="correo" Mode="In" Type="String" />
             <Parameter Name="contrasenia" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="mostrarUltimoPago" ReturnType="Collection(ciberstyleModel.mostrarUltimoPago_Result)">
+            <Parameter Name="idUsuario" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="p_productoGeneral" ReturnType="Collection(ciberstyleModel.p_productoGeneral_Result)" />
           <FunctionImport Name="p_productoMasVendido02" ReturnType="Collection(ciberstyleModel.p_productoMasVendido02_Result)" />
           <FunctionImport Name="p_registrarProducto">
             <Parameter Name="nombre" Mode="In" Type="String" />
@@ -355,10 +360,6 @@
             <Parameter Name="precio" Mode="In" Type="Decimal" />
             <Parameter Name="imagen" Mode="In" Type="Binary" />
             <Parameter Name="stock" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="p_productoGeneral" ReturnType="Collection(ciberstyleModel.p_productoGeneral_Result)" />
-          <FunctionImport Name="mostrarUltimoPago" ReturnType="Collection(ciberstyleModel.mostrarUltimoPago_Result)">
-            <Parameter Name="idUsuario" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="login_usuario_Result">
@@ -370,19 +371,6 @@
           <Property Type="String" Name="correo" Nullable="true" MaxLength="100" />
           <Property Type="DateTime" Name="fechaRegistro" Nullable="true" Precision="23" />
         </ComplexType>
-        <ComplexType Name="p_productoMasVendido02_Result">
-          <Property Type="Int32" Name="idproducto" Nullable="false" />
-          <Property Type="String" Name="nombre" Nullable="false" MaxLength="100" />
-          <Property Type="String" Name="descripcion" Nullable="false" MaxLength="100" />
-          <Property Type="Decimal" Name="precio" Nullable="true" Precision="18" Scale="0" />
-          <Property Type="Binary" Name="imagen" Nullable="false" MaxLength="Max" />
-        </ComplexType>
-        <ComplexType Name="p_productoGeneral_Result">
-          <Property Type="Int32" Name="idproducto" Nullable="false" />
-          <Property Type="String" Name="nombre" Nullable="false" MaxLength="100" />
-          <Property Type="String" Name="descripcion" Nullable="false" MaxLength="100" />
-          <Property Type="Binary" Name="imagen" Nullable="false" MaxLength="Max" />
-        </ComplexType>
         <ComplexType Name="mostrarUltimoPago_Result">
           <Property Type="Int32" Name="idpago" Nullable="false" />
           <Property Type="Int32" Name="idusuario" Nullable="true" />
@@ -393,6 +381,20 @@
           <Property Type="String" Name="mes" Nullable="true" MaxLength="2" />
           <Property Type="String" Name="cvv" Nullable="true" MaxLength="4" />
           <Property Type="Decimal" Name="total" Nullable="true" Precision="9" Scale="2" />
+        </ComplexType>
+        <ComplexType Name="p_productoGeneral_Result">
+          <Property Type="Int32" Name="idproducto" Nullable="false" />
+          <Property Type="String" Name="nombre" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="descripcion" Nullable="false" MaxLength="100" />
+          <Property Type="Binary" Name="imagen" Nullable="false" MaxLength="Max" />
+          <Property Type="Decimal" Name="precio" Nullable="true" Precision="18" Scale="0" />
+        </ComplexType>
+        <ComplexType Name="p_productoMasVendido02_Result">
+          <Property Type="Int32" Name="idproducto" Nullable="false" />
+          <Property Type="String" Name="nombre" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="descripcion" Nullable="false" MaxLength="100" />
+          <Property Type="Decimal" Name="precio" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="Binary" Name="imagen" Nullable="false" MaxLength="Max" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -484,28 +486,6 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="p_productoMasVendido02" FunctionName="ciberstyleModel.Store.p_productoMasVendido02">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="ciberstyleModel.p_productoMasVendido02_Result">
-                <ScalarProperty Name="idproducto" ColumnName="idproducto" />
-                <ScalarProperty Name="nombre" ColumnName="nombre" />
-                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
-                <ScalarProperty Name="precio" ColumnName="precio" />
-                <ScalarProperty Name="imagen" ColumnName="imagen" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="p_registrarProducto" FunctionName="ciberstyleModel.Store.p_registrarProducto" />
-          <FunctionImportMapping FunctionImportName="p_productoGeneral" FunctionName="ciberstyleModel.Store.p_productoGeneral">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="ciberstyleModel.p_productoGeneral_Result">
-                <ScalarProperty Name="idproducto" ColumnName="idproducto" />
-                <ScalarProperty Name="nombre" ColumnName="nombre" />
-                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
-                <ScalarProperty Name="imagen" ColumnName="imagen" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="mostrarUltimoPago" FunctionName="ciberstyleModel.Store.mostrarUltimoPago">
             <ResultMapping>
               <ComplexTypeMapping TypeName="ciberstyleModel.mostrarUltimoPago_Result">
@@ -521,6 +501,29 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="p_productoGeneral" FunctionName="ciberstyleModel.Store.p_productoGeneral">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ciberstyleModel.p_productoGeneral_Result">
+                <ScalarProperty Name="idproducto" ColumnName="idproducto" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="imagen" ColumnName="imagen" />
+                <ScalarProperty Name="precio" ColumnName="precio" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="p_productoMasVendido02" FunctionName="ciberstyleModel.Store.p_productoMasVendido02">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ciberstyleModel.p_productoMasVendido02_Result">
+                <ScalarProperty Name="idproducto" ColumnName="idproducto" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="precio" ColumnName="precio" />
+                <ScalarProperty Name="imagen" ColumnName="imagen" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="p_registrarProducto" FunctionName="ciberstyleModel.Store.p_registrarProducto" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

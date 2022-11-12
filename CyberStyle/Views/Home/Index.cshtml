@@ -228,7 +228,7 @@
     <br>
     <!-- App features section-->
     <section id="features">
-        <h3 class="text-center">Productos Mas Vendidos</h3>
+        <h3 class="text-center" style="font-family:Arial;font-weight:bold;">Productos Mas Vendidos</h3>
         <div class="container px-5">
             <div class="row gx-5 align-items-center">
 
@@ -239,7 +239,7 @@
                         <img class="card-img-top" src="@Url.Action("getImage","Producto", new { id = item.idproducto})" alt="Card image cap">
                         <div class="card-body">
                             <p class="card-text">@item.nombre</p>
-                            <h6 class="text-center" style="color:red;font-weight:bold;font-family:Arial, Helvetica, sans-serif;">S/. 69.50</h6>
+                            <h6 class="text-center">@String.Format("{0:C}", @item.precio)</h6>
                             <input type="number" class="form-control" min="1" value="value" style="width: 100px; margin-right: 5px; border: 1px solid #0ABBB0;" /><br />
                             <button class="agregar" style="width:100%;">Añadir al carrito</button>
                         </div>
@@ -251,21 +251,20 @@
         </div>
     </section>
     <hr />
-
     <section id="features">
-        <h3 class="text-center">Nuestros productos</h3>
+        <h3 class="text-center"  style="font-family:Arial;font-weight:bold;">Nuestros productos</h3>
         <div class="container px-5">
             <div class="row gx-5 align-items-center">
                 @foreach (var item in ViewBag.lista02)
                 {
-                    <div class="card" style="width: 18rem;">
+                    <div class="card" style="width: 18rem;height:500px;">
                         <input type="hidden" value="@item.idproducto" />
                         <img class="card-img-top" src="@Url.Action("getImage","Producto", new { id = item.idproducto})" alt="Card image cap">
                         <div class="card-body">
-                            <p class="card-text">@item.nombre</p>
-                            <h6 class="text-center" style="color:red;font-weight:bold;font-family:Arial, Helvetica, sans-serif;">S/. 69.50</h6>
-                            <input type="number" class="form-control" min="1" value="value" style="width: 100px; margin-right: 5px; border: 1px solid #0ABBB0;" /><br />
-                            <button class="agregar" style="width:100%;">Añadir al carrito</button>
+                           <b><p class="card-text">@item.nombre</p></b>
+                            <b><h6 class="text-center">@String.Format("{0:C}", @item.precio)</h6></b>
+                            <input type="number" class="form-control" min="1" value="1" style="width: 100px; margin-right: 5px; border: 1px solid #0ABBB0;" /><br />
+                            <button class="agregar btn btn-primary" style="width:100%;">Añadir al carrito</button>
                         </div>
                     </div>
                 }

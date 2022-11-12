@@ -47,6 +47,20 @@ namespace CyberStyle.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<login_usuario_Result>("login_usuario", correoParameter, contraseniaParameter);
         }
     
+        public virtual ObjectResult<mostrarUltimoPago_Result> mostrarUltimoPago(Nullable<int> idUsuario)
+        {
+            var idUsuarioParameter = idUsuario.HasValue ?
+                new ObjectParameter("idUsuario", idUsuario) :
+                new ObjectParameter("idUsuario", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<mostrarUltimoPago_Result>("mostrarUltimoPago", idUsuarioParameter);
+        }
+    
+        public virtual ObjectResult<p_productoGeneral_Result> p_productoGeneral()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<p_productoGeneral_Result>("p_productoGeneral");
+        }
+    
         public virtual ObjectResult<p_productoMasVendido02_Result> p_productoMasVendido02()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<p_productoMasVendido02_Result>("p_productoMasVendido02");
@@ -79,20 +93,6 @@ namespace CyberStyle.Models
                 new ObjectParameter("stock", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("p_registrarProducto", nombreParameter, descripcionParameter, categoriaParameter, precioParameter, imagenParameter, stockParameter);
-        }
-    
-        public virtual ObjectResult<p_productoGeneral_Result> p_productoGeneral()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<p_productoGeneral_Result>("p_productoGeneral");
-        }
-    
-        public virtual ObjectResult<mostrarUltimoPago_Result> mostrarUltimoPago(Nullable<int> idUsuario)
-        {
-            var idUsuarioParameter = idUsuario.HasValue ?
-                new ObjectParameter("idUsuario", idUsuario) :
-                new ObjectParameter("idUsuario", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<mostrarUltimoPago_Result>("mostrarUltimoPago", idUsuarioParameter);
         }
     }
 }

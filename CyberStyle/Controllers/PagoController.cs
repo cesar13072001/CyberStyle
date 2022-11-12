@@ -16,14 +16,14 @@ namespace CyberStyle.Controllers
         public ActionResult Index()
         {
             return View();
-        }
+        }  
 
 
         public ActionResult ValPago()
         {
             if (Session["user"] == null)
             {
-                return RedirectToAction("Login", "Home");
+                return RedirectToAction("Login", "Usuario");
             }
             else
             {

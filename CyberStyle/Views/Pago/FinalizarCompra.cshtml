@@ -1,29 +1,51 @@
-﻿<div id="preloader" style="width: 100%; height: 100%; background: rgb(225, 225, 225); position: fixed; overflow: hidden; box-sizing: border-box; z-index: 10000; display: flex; justify-content: center; align-items: center; flex-direction: column; ">
-    <img src="~/images/200w.gif" width="150px" />
-    <h6><b>Estamos Procesando tu pago</b></h6>
-    <div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+﻿
+@{
+    Layout = null;
+}
 
-</div> 
-<script src="https://kit.fontawesome.com/62879ca56c.js" crossorigin="anonymous"></script>
-<div class="container" style="padding-top:100px;">
-    <div style="width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;">
-        <img src="~/images/succes.jpg" width="200px" />
-        <br />
-        <h4>! Gracias por tu compra !</h4>
-        <h6>Tu Codigo de transaccion es <b>Nº @ViewBag.codigopago</b></h6>
-        <h6>Fecha de Compra <b>@ViewBag.fechaCompra</b></h6>
-        <p>Se ennvio un correo de confirmacion a su correo asociado</p>
-        <a href="/DashBoard/@ViewBag.valor" class="btn btn-warning">Ver Mis @ViewBag.valor</a>
-        <br />
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>FinalizarCompra</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div id="preloader" style="width: 100%; height: 100%; background: rgb(225, 225, 225); position: fixed; overflow: hidden; box-sizing: border-box; z-index: 10000; display: flex; justify-content: center; align-items: center; flex-direction: column; ">
+        <img src="~/Content/Imagenes/loading.gif" width="150px" />
+        <h6><b>Estamos Procesando tu pago</b></h6>
+        <div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+
     </div>
-</div>
+    <script src="https://kit.fontawesome.com/62879ca56c.js" crossorigin="anonymous"></script>
+    <div class="container" style="padding-top:100px;">
+        <div style="width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;">
+            <img src="~/Content/Imagenes/success.gif" width="200px" />
+            <br />
+            <h4>! Gracias por tu compra !</h4>
+            <h6>Tu Codigo de transaccion es <b>Nº @ViewBag.codigopago</b></h6>
+            <h6>Fecha de Compra <b>@ViewBag.fechaCompra</b></h6>
+            <p>Se ennvio un correo de confirmacion a su correo asociado</p>
+            <a href="/Home/index" class="btn btn-warning">Volver al inicio</a>
+            <br />
+        </div>
+    </div>
 
 
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script>
+    setTimeout(function () {
+            var preload = document.getElementById("preloader");
+            preload.style.setProperty("display", "none");
+        }, 3000);</script>
+    <section><br><br></section>
+</body>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-<script>setTimeout(function () {
-        var preload = document.getElementById("preloader");
-        preload.style.setProperty("display", "none");
-    }, 3000);</script>
-<section><br><br></section>
+
+</html>
