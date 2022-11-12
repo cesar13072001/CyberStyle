@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="9c9ed14248564e1d804a680f8b8807c9" Name="Diagram1">
+      <Diagram DiagramId="4e4e04036696419aa7cb404975baf494" Name="Diagram1">
         <EntityTypeShape EntityType="ciberstyleModel.Categoria" Width="1.5" PointX="3" PointY="6.875" IsExpanded="true" />
         <EntityTypeShape EntityType="ciberstyleModel.DetallePago" Width="1.5" PointX="7.5" PointY="1.625" IsExpanded="true" />
         <EntityTypeShape EntityType="ciberstyleModel.Pago" Width="1.5" PointX="5.25" PointY="2.125" IsExpanded="true" />
