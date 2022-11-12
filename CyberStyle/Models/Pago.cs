@@ -11,8 +11,7 @@ namespace CyberStyle.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
-
+    
     public partial class Pago
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -37,29 +36,5 @@ namespace CyberStyle.Models
         public virtual Usuario Usuario { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Reclamos> Reclamos { get; set; }
-
-
-        public List<Pago> listar()
-        {
-
-            var pagos = new List<Pago>();
-            string cadena = "SELECT * FROM PAGO";
-
-            try
-            {
-                using (var contenedor = new ciberstyleEntities())
-                {
-                    pagos = contenedor.Database.SqlQuery<Pago>(cadena).ToList();
-                }
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-            return pagos;
-        }
-        
-        
     }
 }
