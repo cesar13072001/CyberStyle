@@ -195,9 +195,11 @@
     <Content Include="Content\Imagenes\img\google-play-badge.svg" />
     <Content Include="Content\Imagenes\img\portrait_black.png" />
     <Content Include="Content\Imagenes\img\tnw-logo.svg" />
+    <Content Include="Content\Imagenes\loading.gif" />
     <Content Include="Content\Imagenes\logo.png" />
     <Content Include="Content\Imagenes\Prenda.png" />
     <Content Include="Content\Imagenes\shopping-cart.png" />
+    <Content Include="Content\Imagenes\success.gif" />
     <Content Include="Content\styles.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />

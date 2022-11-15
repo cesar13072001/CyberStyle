@@ -84,6 +84,7 @@ namespace CyberStyle.Controllers
                 obj.imagen = image.GetBytes();
                 obj.masvend = 0;
                 obj.estado = "Activo";
+                obj.precio = (decimal)obj.precio;
                 db.Producto.Add(obj);
                 db.SaveChanges();
                 return RedirectToAction("Listar");
