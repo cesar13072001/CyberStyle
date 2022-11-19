@@ -24,6 +24,7 @@ namespace CyberStyle.Models
         public int idpago { get; set; }
         public Nullable<int> idusuario { get; set; }
         public Nullable<System.DateTime> fechaPago { get; set; }
+
         public string nomTarjeta { get; set; }
         public string numTarjeta { get; set; }
         public string annio { get; set; }
