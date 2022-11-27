@@ -214,6 +214,7 @@
     <Content Include="Content\Imagenes\Prenda.png" />
     <Content Include="Content\Imagenes\shopping-cart.png" />
     <Content Include="Content\Imagenes\success.gif" />
+    <Content Include="Content\index.css" />
     <Content Include="Content\styles.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />

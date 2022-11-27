@@ -28,7 +28,7 @@
             <div class="collapse navbar-collapse" id="navbarText">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link" style="color: white" href="/">Inicio<i class="fa-solid fa-house"></i></a>
+                        <a class="nav-link" style="color: white" href="/Producto/Index">Inicio<i class="fa-solid fa-house"></i></a>
                     </li>
 
                     @foreach (var item in Session["user"] as List<CyberStyle.Models.login_usuario_Result>)
@@ -51,7 +51,7 @@
 
 
 
-                    <li class="nav-item " style="float: left;margin-left: 870px;">
+                    <li class="nav-item " style="float: left;margin-left: 700px;">
                         <a class="nav-link" style="color: white" href="/Usuario/Salir">Cerrar Session<i class="fa-solid fa-power-off"></i></a>
                     </li>
                 </ul>
@@ -81,10 +81,10 @@
             @foreach (var item in Model)
             {
                 <div class="col">
-                    <div class="card">
+                    <div class="card h-100">
                         <img src="@Url.Action("getImage", "Producto", new { id = item.idproducto })" class="card-img-top" alt="..." style="height:300px">
                         <div class="card-body">
-                            <h3 class="card-title">@item.nombre</h3>
+                            <h4 class="card-title"><b>@item.nombre</b></h4>
                             <p class="card-text">@item.descripcion</p>
                             <h6 class="card-text"><strong>Precio:</strong>S/ @item.precio</h6>
                             <h6 class="card-text"><strong>Categoría:</strong> @item.Categoria.nomcategoria</h6>

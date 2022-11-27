@@ -25,6 +25,10 @@ namespace CyberStyle.Controllers
             {
                 return RedirectToAction("Login", "Usuario");
             }
+            else if(Session["carrito"] == null)
+            {
+                return RedirectToAction("Index","Home");
+            }
             else
             {
                 return RedirectToAction("Pago");

@@ -76,5 +76,12 @@ namespace CyberStyle.Controllers
 
             return View();
         }
+
+        public ActionResult Eliminar(int id)
+        {
+            List<CarritoItem> compras = (List<CarritoItem>)Session["carrito"];
+            compras.RemoveAt(getIndex(id));
+            return RedirectToAction("/");
+        }
     }
 }
