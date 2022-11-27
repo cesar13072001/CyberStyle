@@ -17,7 +17,14 @@ namespace CyberStyle.Controllers
         ciberstyleEntities db = new ciberstyleEntities();
         public ActionResult Index()
         {
-            return View();
+            int idRol = IdRol();
+            if (idRol != -1)
+            {
+
+                return View();
+            }
+            return RedirectToAction("Index", "Home");
+
         }
 
         public ActionResult getImage(int id)
